@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "npm run db:setup && vite",
+    "db:setup": "node scripts/init-db.js",
+    "build": "npm run db:setup && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
