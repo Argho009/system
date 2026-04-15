@@ -4,14 +4,19 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 // Load admin environment variables
-dotenv.config({ path: '.env.admin' });
+if (fs.existsSync('.env.admin')) {
+  dotenv.config({ path: '.env.admin' });
+} else {
+  console.log('⚠️ Skipping auto-setup: .env.admin not found. You must run SQL manually or provide Service Role key.');
+  process.exit(0);
+}
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !serviceRoleKey) {
-  console.error('❌ Error: VITE_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env.admin');
-  process.exit(1);
+  console.log('⚠️ Skipping auto-setup: Missing VITE_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.admin');
+  process.exit(0);
 }
 
 const supabase = createClient(supabaseUrl, serviceRoleKey);
