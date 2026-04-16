@@ -1,88 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import React from 'react';
+import { SystemSettingsForm } from '../../components/ui/SystemSettingsForm';
+import { Settings, Clock, Database, ExternalLink } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
-import { Table } from '../../components/ui/Table';
-import { toast } from '../../components/ui/Toast';
-import { Modal } from '../../components/ui/Modal';
-import { Input } from '../../components/ui/Input';
 
-export const Config = () => {
-  const [configParams, setConfigParams] = useState([]);
-  const [branches, setBranches] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchConfig();
-    fetchBranches();
-  }, []);
-
-  const fetchConfig = async () => {
-    const { data, error } = await supabase.from('system_config').select('*');
-    if (!error && data) setConfigParams(data);
-  };
-
-  const fetchBranches = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('branches').select('*');
-    if (!error && data) setBranches(data);
-    setLoading(false);
-  };
-
-  const handleUpdateConfig = async (key, value) => {
-    const { error } = await supabase.from('system_config').update({ value }).eq('key', key);
-    if (error) toast.error("Failed to update");
-    else toast.success("Config updated");
-  };
-
-  const handleAddBranch = async () => {
-    const name = window.prompt("Enter new branch name (e.g. AI, CS):");
-    if (!name) return;
-    const { error } = await supabase.from('branches').insert([{ name }]);
-    if (error) toast.error(error.message);
-    else {
-      toast.success("Branch added");
-      fetchBranches();
-    }
-  };
-
+export const AdminConfig = () => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-4xl animate-in fade-in duration-500">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800">System Config</h2>
-        <p className="text-sm text-slate-500">Manage global system parameters.</p>
+        <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <Settings className="h-6 w-6 text-indigo-600" />
+          System Configuration
+        </h2>
+        <p className="text-sm text-slate-500">Manage global variables and system maintenance tasks.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {configParams.map(param => (
-          <div key={param.key} className="bg-white p-6 border border-slate-200 rounded-md">
-            <h3 className="text-sm font-semibold text-slate-700 capitalize">{param.key.replace(/_/g, ' ')}</h3>
-            <div className="mt-4 flex items-center space-x-4">
-              <Input 
-                className="w-full" 
-                defaultValue={param.value} 
-                onBlur={(e) => {
-                  if (e.target.value !== param.value) handleUpdateConfig(param.key, e.target.value);
-                }} 
-              />
-            </div>
-            <p className="mt-2 text-xs text-slate-400">Updates save on blur.</p>
-          </div>
-        ))}
-      </div>
+      <SystemSettingsForm />
 
-      <div>
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-slate-800">Branches Management</h3>
-          <Button size="sm" onClick={handleAddBranch}>Add Branch</Button>
+      <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden opacity-60 grayscale cursor-not-allowed">
+        <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-2">
+           <Clock className="h-4 w-4 text-slate-400" />
+           <h3 className="font-semibold text-slate-800">Working Hours & Slots</h3>
         </div>
-        <div className="bg-white">
-          <Table 
-            columns={[
-              { header: 'Branch Name', accessor: 'name' },
-              { header: 'Added At', accessor: 'created_at', render: (row) => new Date(row.created_at).toLocaleDateString() }
-            ]} 
-            data={branches} 
-          />
+        <div className="p-8 text-center bg-slate-50/30">
+           <p className="text-sm text-slate-400 italic">Advanced scheduling constraints coming in Phase 2.</p>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <Database className="h-4 w-4 text-indigo-500" />
+            <h3 className="font-semibold text-slate-800">System Backup & Logs</h3>
+          </div>
+        </div>
+        <div className="p-6 space-y-4">
+          <p className="text-sm text-slate-600">Database backups and real-time monitoring are managed via the Supabase cloud console.</p>
+          <div className="flex gap-4">
+            <Button variant="outline" size="sm" onClick={() => window.open('https://app.supabase.com', '_blank')}>
+               Open Supabase Dashboard
+               <ExternalLink className="h-3 w-3 ml-2" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

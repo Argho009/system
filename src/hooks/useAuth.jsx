@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (college_id, password) => {
     try {
       // Supabase Auth expects valid emails
-      const email = college_id.includes('@') ? college_id : `${college_id}@college.edu`;
+      const email = college_id.includes('@') ? college_id : `${college_id}@college`;
       const { data, error } = await supabase.auth.signInWithPassword({
         email, 
         password,

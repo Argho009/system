@@ -4,19 +4,23 @@ import { useAuth } from '../../hooks/useAuth';
 import { cn } from '../ui/Button';
 import { 
   Users, Upload, Calendar, Settings, FileText, 
-  CheckSquare, Activity, Send, Clock, BookOpen, UserCircle, Bell
+  CheckSquare, Activity, Send, Clock, BookOpen, UserCircle, Bell, Landmark, ShieldAlert
 } from 'lucide-react';
 
 const ADMIN_LINKS = [
   { to: '/admin', icon: Activity, label: 'Dashboard' },
   { to: '/admin/users', icon: Users, label: 'Users' },
+  { to: '/admin/branches', icon: Landmark, label: 'Branches' },
   { to: '/admin/bulk-upload', icon: Upload, label: 'Bulk Upload' },
   { to: '/admin/marks-upload', icon: Upload, label: 'Marks Upload' },
   { to: '/admin/timetable', icon: Calendar, label: 'Timetable' },
   { to: '/admin/subjects', icon: BookOpen, label: 'Subjects' },
   { to: '/admin/sem-transition', icon: Send, label: 'Sem Transition' },
   { to: '/admin/config', icon: Settings, label: 'Config' },
+  { to: '/admin/preferences', icon: Settings, label: 'Preferences' },
   { to: '/admin/notices', icon: Bell, label: 'Notices' },
+  { to: '/admin/holidays', icon: Calendar, label: 'Holidays' },
+  { to: '/admin/recovery', icon: ShieldAlert, label: 'Recovery' },
 ];
 
 const HOD_LINKS = [

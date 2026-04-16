@@ -3,81 +3,128 @@ import { supabase } from '../../lib/supabase';
 import { StatCard } from '../../components/ui/StatCard';
 import { Table } from '../../components/ui/Table';
 import { Badge } from '../../components/ui/Badge';
-import { Users, BookOpen, GraduationCap, AlertTriangle } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
+import { Users, BookOpen, GraduationCap, Bell, UserPlus, Upload, Calendar, ArrowRightLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const AdminDashboard = () => {
-  const [stats, setStats] = useState({ users: 0, students: 0, teachers: 0, subjects: 0 });
-  const [recentUsers, setRecentUsers] = useState([]);
+  const [stats, setStats] = useState({ students: 0, teachers: 0, subjects: 0, notices: 0 });
+  const [recentLogs, setRecentLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const [usersRes, studentsRes, teachersRes, subjectsRes] = await Promise.all([
-        supabase.from('users').select('*', { count: 'exact', head: true }),
+      const [studentsRes, teachersRes, subjectsRes, noticesRes] = await Promise.all([
         supabase.from('students').select('*', { count: 'exact', head: true }),
         supabase.from('users').select('*', { count: 'exact', head: true }).eq('role', 'teacher'),
         supabase.from('subjects').select('*', { count: 'exact', head: true }),
+        supabase.from('notices').select('*', { count: 'exact', head: true }).eq('is_active', true),
       ]);
+      
       setStats({
-        users: usersRes.count || 0,
         students: studentsRes.count || 0,
         teachers: teachersRes.count || 0,
         subjects: subjectsRes.count || 0,
+        notices: noticesRes.count || 0,
       });
 
-      const { data: recent } = await supabase
-        .from('users')
+      const { data: logs } = await supabase
+        .from('bulk_upload_logs')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(10);
-      setRecentUsers(recent || []);
+        .limit(5);
+      setRecentLogs(logs || []);
       setLoading(false);
     };
     fetchData();
   }, []);
 
-  const columns = [
-    { header: 'College ID', accessor: 'college_id' },
-    { header: 'Name', accessor: 'name' },
+  const logColumns = [
+    { header: 'File Name', accessor: 'file_name' },
+    { header: 'Type', accessor: 'upload_type', render: (row) => <span className="capitalize">{row.upload_type.replace('_', ' ')}</span> },
     {
-      header: 'Role',
-      accessor: 'role',
+      header: 'Status',
+      accessor: 'status',
       render: (row) => (
-        <Badge variant={row.role === 'admin' ? 'danger' : row.role === 'hod' ? 'purple' : row.role === 'teacher' ? 'blue' : 'success'} className="uppercase">
-          {row.role}
+        <Badge variant={row.status === 'completed' ? 'success' : row.status === 'failed' ? 'danger' : 'warning'}>
+          {row.status.toUpperCase()}
         </Badge>
       ),
     },
     {
-      header: 'Status',
-      accessor: 'is_active',
-      render: (row) => <Badge variant={row.is_active ? 'success' : 'danger'}>{row.is_active ? 'Active' : 'Inactive'}</Badge>,
-    },
-    {
-      header: 'Joined',
+      header: 'Date',
       accessor: 'created_at',
       render: (row) => new Date(row.created_at).toLocaleDateString('en-IN'),
     },
   ];
 
+  const QuickLink = ({ to, title, icon: Icon, description }) => (
+    <Link to={to} className="block group">
+      <div className="p-4 rounded-lg border border-slate-200 bg-white hover:border-indigo-300 hover:shadow-sm transition-all flex items-center gap-4">
+        <div className="p-3 rounded-md bg-slate-50 text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors">
+          <Icon className="h-6 w-6" />
+        </div>
+        <div>
+          <h4 className="font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors">{title}</h4>
+          <p className="text-xs text-slate-500">{description}</p>
+        </div>
+      </div>
+    </Link>
+  );
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-in fade-in duration-500">
       <div>
-        <h2 className="text-xl font-semibold text-slate-800">Admin Dashboard</h2>
-        <p className="text-sm text-slate-500">System overview and recent activity.</p>
+        <h2 className="text-2xl font-bold text-slate-900">Admin Dashboard</h2>
+        <p className="text-sm text-slate-500">Welcome back. Here's what's happening across the college.</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard title="Total Users" value={loading ? '...' : stats.users} subtitle="All roles" color="indigo" />
-        <StatCard title="Students" value={loading ? '...' : stats.students} subtitle="Enrolled" color="green" />
-        <StatCard title="Teachers" value={loading ? '...' : stats.teachers} subtitle="Faculty members" color="slate" />
-        <StatCard title="Subjects" value={loading ? '...' : stats.subjects} subtitle="All branches" color="indigo" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard title="Total Students" value={loading ? '...' : stats.students} icon={GraduationCap} color="indigo" />
+        <StatCard title="Total Teachers" value={loading ? '...' : stats.teachers} icon={Users} color="slate" />
+        <StatCard title="Total Subjects" value={loading ? '...' : stats.subjects} icon={BookOpen} color="green" />
+        <StatCard title="Active Notices" value={loading ? '...' : stats.notices} icon={Bell} color="indigo" />
       </div>
 
-      <div>
-        <h3 className="text-base font-semibold text-slate-700 mb-3">Recently Added Users</h3>
-        <Table columns={columns} data={recentUsers} emptyMessage="No users found." />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-slate-800">Recent Activity</h3>
+            <span className="text-xs text-slate-500">Last 5 bulk uploads</span>
+          </div>
+          <Table columns={logColumns} data={recentLogs} emptyMessage="No recent activity found." />
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-slate-800">Quick Links</h3>
+          <div className="grid grid-cols-1 gap-3">
+            <QuickLink 
+              to="/admin/users" 
+              title="Add User" 
+              icon={UserPlus} 
+              description="Create new system accounts" 
+            />
+            <QuickLink 
+              to="/admin/bulk-upload" 
+              title="Upload Student Roles" 
+              icon={Upload} 
+              description="Batch import with Excel" 
+            />
+            <QuickLink 
+              to="/admin/timetable" 
+              title="Manage Timetable" 
+              icon={Calendar} 
+              description="Assign rooms and subjects" 
+            />
+            <QuickLink 
+              to="/admin/sem-transition" 
+              title="Semester Transition" 
+              icon={ArrowRightLeft} 
+              description="Move students to next sem" 
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
