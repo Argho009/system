@@ -12,7 +12,7 @@ export const StudentMarks = () => {
 
   useEffect(() => { if (user) fetchData(); }, [user]);
 
-  const fetchData = async () => {
+  async function fetchData() {
     setLoading(true);
     const { data: stu } = await supabase.from('students').select('id, branch, sem').eq('user_id', user.id).single();
     if (!stu) { setLoading(false); return; }
@@ -25,7 +25,7 @@ export const StudentMarks = () => {
     setCtMarks(ctRes.data || []);
     setEndsem(esRes.data || []);
     setLoading(false);
-  };
+  }
 
   // Group CT marks by subject
   const ctBySubject = ctMarks.reduce((acc, m) => {

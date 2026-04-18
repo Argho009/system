@@ -6,7 +6,7 @@ export const ToastProvider = () => {
     <Toaster 
       position="top-right"
       toastOptions={{
-        duration: 4000,
+        duration: 3000,
         style: {
           background: '#fff',
           color: '#334155',
@@ -31,7 +31,7 @@ export const ToastProvider = () => {
 };
 
 export const toast = {
-  success: (msg) => rhtToast.success(msg),
-  error: (msg) => rhtToast.error(msg),
-  info: (msg) => rhtToast(msg),
+  success: (msg, options) => rhtToast.success(msg, options),
+  error: (msg, options) => rhtToast.error(msg, options),
+  info: (msg, options) => rhtToast(msg, options),
 };

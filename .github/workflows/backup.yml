@@ -1,0 +1,107 @@
+name: Daily Database Backup to Google Drive
+
+on:
+  schedule:
+    - cron: '0 19 * * *'    # Daily at 12:30 AM IST
+    - cron: '0 19 * * 0'    # Also runs weekly on Sunday
+    - cron: '0 19 1 * *'    # Also runs monthly on 1st
+  workflow_dispatch:
+    inputs:
+      backup_type:
+        description: 'Backup type (daily/weekly/monthly)'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+          - daily
+          - weekly
+          - monthly
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y postgresql-client
+
+      - name: Set backup type and filename
+        id: meta
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TYPE="${{ github.event.inputs.backup_type }}"
+          elif [ "$(date +%d)" = "01" ]; then
+            TYPE="monthly"
+          elif [ "$(date +%u)" = "7" ]; then
+            TYPE="weekly"
+          else
+            TYPE="daily"
+          fi
+          DATE=$(date +%Y%m%d_%H%M)
+          FILENAME="backup_${TYPE}_${DATE}.sql.gz"
+          echo "backup_type=$TYPE"     >> $GITHUB_OUTPUT
+          echo "backup_filename=$FILENAME" >> $GITHUB_OUTPUT
+          echo "Backup type: $TYPE"
+          echo "Filename: $FILENAME"
+
+      - name: Dump Supabase database
+        run: |
+          FILENAME="${{ steps.meta.outputs.backup_filename }}"
+          PGPASSWORD=${{ secrets.SUPABASE_DB_PASSWORD }} \
+          pg_dump \
+            -h ${{ secrets.SUPABASE_DB_HOST }} \
+            -p 5432 \
+            -U postgres \
+            -d postgres \
+            --no-owner \
+            --no-acl \
+            --no-comments \
+            --schema=public \
+            -f backup_raw.sql
+
+          gzip -9 backup_raw.sql
+          mv backup_raw.sql.gz "$FILENAME"
+
+          SIZE=$(ls -lh "$FILENAME" | awk '{print $5}')
+          echo "Backup created: $FILENAME ($SIZE)"
+
+      - name: Check database size and warn if large
+        id: dbsize
+        run: |
+          SIZE_MB=$(PGPASSWORD=${{ secrets.SUPABASE_DB_PASSWORD }} \
+          psql \
+            -h ${{ secrets.SUPABASE_DB_HOST }} \
+            -p 5432 \
+            -U postgres \
+            -d postgres \
+            -t -c \
+            "SELECT ROUND(pg_database_size('postgres')/1024.0/1024.0, 2);")
+
+          SIZE_MB=$(echo $SIZE_MB | xargs)
+          echo "db_size_mb=$SIZE_MB" >> $GITHUB_OUTPUT
+          echo "Current database size: ${SIZE_MB} MB"
+
+          if (( $(echo "$SIZE_MB > 400" | bc -l) )); then
+            echo "::warning::Database is ${SIZE_MB}MB — approaching 500MB limit. Run semester archive soon."
+          elif (( $(echo "$SIZE_MB > 300" | bc -l) )); then
+            echo "::notice::Database is ${SIZE_MB}MB — consider archiving completed semesters."
+          else
+            echo "Database size is healthy: ${SIZE_MB}MB"
+          fi
+
+      - name: Upload backup to Google Drive
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          filename: ${{ steps.meta.outputs.backup_filename }}
+          folderId: "1f6C5udwQatfGxF6uX_Lcxk2BDwehU4nI"
+          overwrite: false
+
+      - name: Confirm upload success
+        run: |
+          echo "✅ Backup complete"
+          echo "   File: ${{ steps.meta.outputs.backup_filename }}"
+          echo "   Type: ${{ steps.meta.outputs.backup_type }}"
+          echo "   DB Size: ${{ steps.dbsize.outputs.db_size_mb }} MB"

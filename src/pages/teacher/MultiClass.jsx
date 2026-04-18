@@ -150,12 +150,20 @@ export const MultiClass = () => {
             <label className="text-sm font-medium text-slate-700">Date</label>
             <input type="date" className="h-10 rounded border border-slate-300 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" value={date} onChange={e => setDate(e.target.value)} />
           </div>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-2">
             <label className="text-sm font-medium text-slate-700">Lecture No.</label>
-            <select className="h-10 rounded border border-slate-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" value={lectureNo} onChange={e => setLectureNo(e.target.value)}>
-              <option value="">Select...</option>
-              {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n}</option>)}
-            </select>
+            <div className="flex flex-wrap gap-2">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => setLectureNo(n.toString())}
+                  className={`w-10 h-10 rounded-full font-semibold text-sm transition-colors border shadow-sm ${lectureNo === n.toString() ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 hover:border-slate-300'}`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
         <Button className="w-full" onClick={handleProceed} disabled={!selectedSubjects.length}>Proceed →</Button>

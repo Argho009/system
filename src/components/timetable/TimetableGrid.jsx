@@ -11,7 +11,6 @@ const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 
 const CellEditor = ({ slotInfo, onClose, onSave, isAuthorized }) => {
   const [subjectId, setSubjectId] = useState(slotInfo.subject_id || '');
-  const [room, setRoom] = useState(slotInfo.room || '');
   const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
@@ -30,30 +29,20 @@ const CellEditor = ({ slotInfo, onClose, onSave, isAuthorized }) => {
           className="w-full mt-1 border border-slate-300 rounded px-2 py-1 bg-slate-50 disabled:opacity-70"
           value={subjectId}
           onChange={(e) => setSubjectId(e.target.value)}
-          disabled={!isAuthorized || slotInfo.canOnlyEditRoom}
+          disabled={!isAuthorized}
         >
           <option value="">Select Subject...</option>
           {subjects.map(s => <option key={s.id} value={s.id}>{s.code} - {s.name}</option>)}
         </select>
       </div>
-      <div>
-        <label className="text-sm font-medium">Room</label>
-        <input 
-          type="text" 
-          className="w-full mt-1 border border-slate-300 rounded px-2 py-1"
-          value={room} 
-          onChange={(e) => setRoom(e.target.value)}
-          disabled={!isAuthorized}
-        />
-      </div>
       {isAuthorized && (
         <div className="flex justify-between items-center pt-2">
-          {slotInfo.subject_id && !slotInfo.canOnlyEditRoom && (
+          {slotInfo.subject_id && (
             <Button 
               variant="ghost" 
               className="text-red-500 hover:bg-red-50" 
               size="sm"
-              onClick={() => onSave({ ...slotInfo, subject_id: null, room: '' })}
+              onClick={() => onSave({ ...slotInfo, subject_id: null, room: null })}
             >
               <Trash2 className="h-4 w-4 mr-1" />
               Clear
@@ -61,7 +50,7 @@ const CellEditor = ({ slotInfo, onClose, onSave, isAuthorized }) => {
           )}
           <div className="flex gap-2 ml-auto">
             <Button variant="ghost" onClick={onClose} size="sm">Cancel</Button>
-            <Button onClick={() => onSave({ ...slotInfo, subject_id: subjectId, room })} size="sm">Save</Button>
+            <Button onClick={() => onSave({ ...slotInfo, subject_id: subjectId, room: null })} size="sm">Save</Button>
           </div>
         </div>
       )}
@@ -187,7 +176,7 @@ export const TimetableGrid = ({ branch, sem, editable = false }) => {
         day_of_week: updatedSlot.day_of_week,
         lecture_no: updatedSlot.lecture_no,
         changed_by: user.id,
-        change_description: isUpdate ? `Updated to ${subject?.name || 'Empty'} in ${updatedSlot.room}` : `Set to ${subject?.name || 'Empty'} in ${updatedSlot.room}`
+        change_description: isUpdate ? `Updated to ${subject?.name || 'Empty'}` : `Set to ${subject?.name || 'Empty'}`
       });
 
       toast.success('Slot updated');
@@ -201,42 +190,7 @@ export const TimetableGrid = ({ branch, sem, editable = false }) => {
     }
   };
 
-  const handleBulkUpdateRoom = async () => {
-    const defaultRoom = prompt('Enter default room for all lectures in this schedule:');
-    if (!defaultRoom) return;
 
-    if (!confirm(`Are you sure you want to set the room to "${defaultRoom}" for all assigned lectures in this branch/sem?`)) return;
-
-    const postNotice = confirm('Would you like to post an automated announcement to the Notice Board about this change?');
-
-    setLoading(true);
-    try {
-      const { error } = await supabase
-        .from('timetable')
-        .update({ room: defaultRoom })
-        .eq('branch', branch)
-        .eq('sem', sem);
-
-      if (error) throw error;
-
-      if (postNotice) {
-        await supabase.from('notices').insert({
-          title: `Room Change: ${branch} Sem ${sem}`,
-          body: `Please note that all scheduled lectures for this branch/semester have been moved to ${defaultRoom} for the current week.`,
-          type: 'general',
-          branch: branch,
-          sem: sem,
-          created_by: user.id
-        });
-      }
-
-      toast.success(postNotice ? 'Rooms updated and notice published!' : 'All rooms updated for this schedule');
-      fetchData();
-    } catch (err) {
-      toast.error('Failed to update rooms: ' + err.message);
-    }
-    setLoading(false);
-  };
 
   const getCellData = (day, lecNo) => {
     return timetable.find(t => t.day_of_week === day && t.lecture_no === lecNo);
@@ -249,13 +203,6 @@ export const TimetableGrid = ({ branch, sem, editable = false }) => {
 
   return (
     <div className="space-y-4">
-      {editable && role === 'admin' && (
-        <div className="flex justify-end">
-          <Button variant="outline" size="sm" onClick={handleBulkUpdateRoom}>
-            Set Default Room for Week
-          </Button>
-        </div>
-      )}
       <div className="overflow-x-auto border border-slate-200 rounded-md bg-white">
       <table className="w-full text-sm text-left table-fixed">
         <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
@@ -275,9 +222,7 @@ export const TimetableGrid = ({ branch, sem, editable = false }) => {
               {Array.from({ length: slots }).map((_, i) => {
                 const lecNo = i + 1;
                 const cellData = getCellData(day, lecNo);
-                const isManagement = role === 'admin' || role === 'hod';
-                const isTeacherOwn = role === 'teacher' && assignedSubjects.includes(cellData?.subject_id);
-                const isAuthorizedToEdit = isManagement || isTeacherOwn;
+                const isAuthorizedToEdit = role === 'admin' || role === 'hod';
 
                 const hasSubstitute = substitutes.find(s => s.timetable_id === cellData?.id);
                 const teacherOnLeave = leaves.find(l => l.teacher_id === cellData?.teacher_id);
@@ -293,8 +238,7 @@ export const TimetableGrid = ({ branch, sem, editable = false }) => {
                           day_of_week: day,
                           lecture_no: lecNo,
                           subject_id: cellData?.subject_id,
-                          room: cellData?.room,
-                          canOnlyEditRoom: isTeacherOwn && !isManagement
+                          room: null
                         });
                       }
                     }}
@@ -302,9 +246,8 @@ export const TimetableGrid = ({ branch, sem, editable = false }) => {
                     <div className="flex flex-col items-center justify-center h-20 rounded border border-transparent group-hover:border-slate-200">
                       {cellData?.subjects ? (
                         <>
-                          <span className="font-bold text-slate-900">{cellData.subjects.code}</span>
-                          <span className="text-[10px] text-slate-500 mt-1 uppercase font-medium">{cellData.room}</span>
-                          
+                          <span className="font-bold text-slate-900 text-xs">{cellData.subjects.code}</span>
+                          <span className="text-[10px] text-slate-500 text-center leading-tight max-w-[7rem] truncate px-1">{cellData.subjects.name}</span>
                           <div className="flex gap-1 mt-1">
                             {hasSubstitute && <Badge variant="indigo" className="px-1 py-0"><UserCheck className="h-3 w-3" /></Badge>}
                             {teacherOnLeave && <Badge variant="warning" className="px-1 py-0"><Coffee className="h-3 w-3" /></Badge>}
@@ -346,7 +289,7 @@ export const TimetableGrid = ({ branch, sem, editable = false }) => {
             slotInfo={editingCell} 
             onClose={() => setEditingCell(null)} 
             onSave={handleSaveCell}
-            isAuthorized={role === 'admin' || role === 'hod' || (role === 'teacher' && editingCell.canOnlyEditRoom)} 
+            isAuthorized={role === 'admin' || role === 'hod'} 
           />
         )}
       </Modal>

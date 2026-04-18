@@ -20,14 +20,14 @@ export const TeacherLeaveRequest = () => {
     supabase.from('users').select('id, name, college_id').eq('role', 'teacher').neq('id', user.id).then(({ data }) => setTeachers(data || []));
   }, [user]);
 
-  const fetchLeaves = async () => {
+  async function fetchLeaves() {
     setLoading(true);
     const { data } = await supabase.from('leave_requests')
       .select('*, reviewer:users!leave_requests_reviewed_by_fkey(name), substitute:users!leave_requests_suggested_substitute_fkey(name)')
       .eq('teacher_id', user.id).order('created_at', { ascending: false });
     setLeaves(data || []);
     setLoading(false);
-  };
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

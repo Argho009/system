@@ -58,8 +58,12 @@ import { SemTransition } from './pages/admin/SemTransition';
 import { AdminConfig } from './pages/admin/Config';
 import { AdminPreferences } from './pages/admin/Preferences';
 import { AdminNotices } from './pages/admin/Notices';
+import { AdminSystemHealth } from './pages/admin/Health';
 import { AdminHolidays } from './pages/admin/Holidays';
 import { EmergencyRecovery } from './pages/admin/Recovery';
+import { ArchiveSemester } from './pages/admin/ArchiveSemester';
+import { BackupFiles } from './pages/admin/BackupFiles';
+import { AdminLeaves } from './pages/admin/Leaves';
 
 // Shared
 import { Notices } from './pages/shared/Notices';
@@ -90,6 +94,7 @@ import { StudentAttendance } from './pages/student/Attendance';
 import { StudentMarks } from './pages/student/Marks';
 import { StudentCondonation } from './pages/student/Condonation';
 import { StudentEndSem } from './pages/student/EndSem';
+import { StudentProfile } from './pages/student/Profile';
 
 function AppRoutes() {
   return (
@@ -110,8 +115,12 @@ function AppRoutes() {
         <Route path="config" element={<AdminConfig />} />
         <Route path="preferences" element={<AdminPreferences />} />
         <Route path="notices" element={<AdminNotices />} />
+        <Route path="health" element={<AdminSystemHealth />} />
         <Route path="holidays" element={<AdminHolidays />} />
+        <Route path="leaves" element={<AdminLeaves />} />
         <Route path="recovery" element={<EmergencyRecovery />} />
+        <Route path="archive-semester" element={<ArchiveSemester />} />
+        <Route path="backups" element={<BackupFiles />} />
       </Route>
 
       {/* HOD ROUTES */}
@@ -150,7 +159,7 @@ function AppRoutes() {
         <Route path="condonation" element={<StudentCondonation />} />
         <Route path="end-sem" element={<StudentEndSem />} />
         <Route path="notices" element={<Notices />} />
-        <Route path="profile" element={<Placeholder title="Profile" />} />
+        <Route path="profile" element={<StudentProfile />} />
       </Route>
 
       <Route path="/unauthorized" element={<Unauthorized />} />

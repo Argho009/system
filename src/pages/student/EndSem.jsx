@@ -4,132 +4,231 @@ import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { toast } from '../../components/ui/Toast';
-import { Upload, Lock } from 'lucide-react';
+import { 
+  Star, MessageSquare, ShieldCheck, 
+  Send, Lock, ChevronRight, 
+  BookOpen, Activity 
+} from 'lucide-react';
 
 export const StudentEndSem = () => {
-  const { user } = useAuth();
-  const [student, setStudent] = useState(null);
-  const [endsemData, setEndsemData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [uploading, setUploading] = useState({});
-  const [markInputs, setMarkInputs] = useState({});
+    const { user } = useAuth();
+    const [student, setStudent] = useState(null);
+    const [subjects, setSubjects] = useState([]);
+    const [polls, setPolls] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState({});
 
-  useEffect(() => { if (user) fetchData(); }, [user]);
+    useEffect(() => {
+        if (user) fetchData();
+    }, [user]);
 
-  const fetchData = async () => {
-    setLoading(true);
-    const { data: stu } = await supabase.from('students').select('id, branch, sem').eq('user_id', user.id).single();
-    if (!stu) { setLoading(false); return; }
-    setStudent(stu);
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const { data: stu } = await supabase.from('students')
+                .select('id, branch, sem')
+                .eq('user_id', user.id)
+                .single();
+            
+            if (stu) {
+                setStudent(stu);
+                // Get subjects and existing poll entries
+                const [subRes, pollRes] = await Promise.all([
+                    supabase.from('subjects').select('id, code, name').eq('branch', stu.branch).eq('sem', stu.sem),
+                    supabase.from('endsem_poll').select('*').eq('student_id', stu.id)
+                ]);
 
-    const { data: configRes } = await supabase.from('system_config').select('value').eq('key', 'current_academic_year').single();
-    const academicYear = configRes?.value || '2024-25';
+                setSubjects(subRes.data || []);
+                const pollMap = {};
+                pollRes.data?.forEach(p => pollMap[p.subject_id] = p);
+                setPolls(pollMap);
+            }
+        } catch (err) {
+            toast.error('Context load failed');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    // Get subjects for student
-    const { data: subjects } = await supabase.from('subjects').select('id, code, name').eq('branch', stu.branch).eq('sem', stu.sem);
-    
-    // Get end sem marks
-    const { data: marks } = await supabase
-      .from('endsem_marks')
-      .select('*')
-      .eq('student_id', stu.id)
-      .eq('sem', stu.sem)
-      .eq('academic_year', academicYear);
+    const handleRating = (subId, rating) => {
+        if (polls[subId]?.id) return; // Already submitted
+        setPolls(prev => ({
+            ...prev,
+            [subId]: { ...prev[subId], rating }
+        }));
+    };
 
-    const merged = (subjects || []).map(sub => {
-      const m = (marks || []).find(m => m.subject_id === sub.id);
-      return { ...sub, markRecord: m || null, academic_year: academicYear };
-    });
+    const handleComment = (subId, comments) => {
+        if (polls[subId]?.id) return;
+        setPolls(prev => ({
+            ...prev,
+            [subId]: { ...prev[subId], comments }
+        }));
+    };
 
-    setEndsemData(merged);
-    const inputs = {};
-    merged.forEach(s => { if (s.markRecord) inputs[s.id] = s.markRecord.marks ?? ''; });
-    setMarkInputs(inputs);
-    setLoading(false);
-  };
+    const submitPoll = async (subId) => {
+        const poll = polls[subId];
+        if (!poll?.rating) return toast.error('Please select a rating');
 
-  const handleSubmitMark = async (sub) => {
-    const marks = parseFloat(markInputs[sub.id]);
-    if (isNaN(marks)) return toast.error('Enter valid marks');
-    setUploading(prev => ({ ...prev, [sub.id]: true }));
+        setSubmitting(prev => ({ ...prev, [subId]: true }));
+        try {
+            const { error } = await supabase.from('endsem_poll').insert({
+                subject_id: subId,
+                student_id: student.id,
+                rating: poll.rating,
+                comments: poll.comments || '',
+                submitted_at: new Date().toISOString()
+            });
 
-    if (sub.markRecord) {
-      const { error } = await supabase.from('endsem_marks').update({ marks, submitted_by: user.id }).eq('id', sub.markRecord.id);
-      if (error) toast.error(error.message);
-      else { toast.success('Marks submitted'); fetchData(); }
-    } else {
-      const { error } = await supabase.from('endsem_marks').insert([{
-        student_id: student.id,
-        subject_id: sub.id,
-        sem: student.sem,
-        marks,
-        submitted_by: user.id,
-        academic_year: sub.academic_year,
-        poll_open: false,
-        is_locked: false,
-      }]);
-      if (error) toast.error(error.message);
-      else { toast.success('Marks submitted'); fetchData(); }
-    }
-    setUploading(prev => ({ ...prev, [sub.id]: false }));
-  };
+            if (error) throw error;
+            toast.success('Feedback recorded anonymously');
+            fetchData();
+        } catch (err) {
+            toast.error(err.message);
+        } finally {
+            setSubmitting(prev => ({ ...prev, [subId]: false }));
+        }
+    };
 
-  if (loading) return <p className="text-sm text-slate-500">Loading...</p>;
+    return (
+        <div className="space-y-6 animate-in fade-in duration-500 pb-20">
+            <div className="flex items-center justify-between">
+                <div>
+                   <div className="flex items-center gap-2 text-indigo-600 mb-1">
+                     <Activity className="h-4 w-4" />
+                     <span className="text-[10px] font-extrabold uppercase tracking-[0.2em]">Quality Feedback Loop</span>
+                   </div>
+                   <h2 className="text-3xl font-bold text-slate-900 tracking-tight">End-Semester Feedback</h2>
+                   <p className="text-sm text-slate-500 font-medium">Your anonymous reviews help improve teaching quality and resource allocation.</p>
+                </div>
+            </div>
 
-  return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-slate-800">End Semester Submissions</h2>
-        <p className="text-sm text-slate-500">Submit your end semester marks when the poll is open.</p>
-      </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2 space-y-4">
+                    {subjects.map((sub) => {
+                        const isSubmitted = !!polls[sub.id]?.id;
+                        const poll = polls[sub.id] || { rating: 0, comments: '' };
 
-      <div className="space-y-3">
-        {endsemData.length === 0 && <p className="text-sm text-slate-400">No subjects found for your branch/semester.</p>}
-        {endsemData.map(sub => {
-          const isOpen = sub.markRecord?.poll_open;
-          const isLocked = sub.markRecord?.is_locked;
-          const hasMarks = sub.markRecord?.marks !== null && sub.markRecord?.marks !== undefined;
+                        return (
+                            <div key={sub.id} className={`panel p-6 bg-white border-slate-200 shadow-sm relative overflow-hidden transition-all ${isSubmitted ? 'opacity-70 grayscale-[0.5]' : 'hover:border-indigo-300 hover:shadow-lg hover:shadow-indigo-50'}`}>
+                                <div className="flex items-start justify-between mb-6">
+                                    <div className="space-y-1">
+                                        <Badge variant="indigo" className="font-mono">{sub.code}</Badge>
+                                        <h3 className="text-lg font-bold text-slate-900">{sub.name}</h3>
+                                    </div>
+                                    {isSubmitted && (
+                                        <div className="flex items-center gap-2 text-green-600 font-bold text-[10px] uppercase bg-green-50 px-3 py-1 rounded-full border border-green-100 animate-in zoom-in duration-300">
+                                            <ShieldCheck className="h-3.5 w-3.5" />
+                                            Record Sealed
+                                        </div>
+                                    )}
+                                </div>
 
-          return (
-            <div key={sub.id} className="bg-white border border-slate-200 rounded-lg p-4">
-              <div className="flex items-start justify-between gap-4">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="indigo">{sub.code}</Badge>
-                    {isLocked && <Badge variant="success"><Lock className="w-3 h-3 mr-1" />Locked</Badge>}
-                    {!isLocked && isOpen && <Badge variant="blue">Poll Open</Badge>}
-                    {!isLocked && !isOpen && <Badge variant="default">Poll Closed</Badge>}
-                  </div>
-                  <p className="font-semibold text-slate-800">{sub.name}</p>
-                  {hasMarks && (
-                    <p className="text-sm text-slate-600">Submitted marks: <strong>{sub.markRecord.marks}</strong></p>
-                  )}
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-6">
+                                        <div className="space-y-2">
+                                            <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Efficiency Rating</p>
+                                            <div className="flex gap-2">
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <button
+                                                        key={star}
+                                                        disabled={isSubmitted}
+                                                        onClick={() => handleRating(sub.id, star)}
+                                                        className={`p-1 transition-all ${isSubmitted ? 'cursor-default' : 'hover:scale-125 focus:outline-none'}`}
+                                                    >
+                                                        <Star 
+                                                            className={`h-6 w-6 ${star <= poll.rating ? 'text-amber-400 fill-amber-400 ripple' : 'text-slate-200'}`} 
+                                                            strokeWidth={1.5}
+                                                        />
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="h-10 w-px bg-slate-100" />
+                                        <div className="flex-1 space-y-2 text-right">
+                                            <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Status</p>
+                                            <p className={`text-xs font-bold ${isSubmitted ? 'text-green-600' : 'text-amber-500'}`}>
+                                                {isSubmitted ? 'Participation Complete' : 'Feedback Required'}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {!isSubmitted && (
+                                        <div className="space-y-3 animate-in fade-in duration-500">
+                                            <textarea 
+                                                className="w-full h-24 p-3 text-sm bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-600 resize-none font-medium placeholder:text-slate-300"
+                                                placeholder="Briefly share your thoughts on the course structure or delivery..."
+                                                value={poll.comments}
+                                                onChange={e => handleComment(sub.id, e.target.value)}
+                                            />
+                                            <div className="flex justify-end">
+                                                <Button 
+                                                    onClick={() => submitPoll(sub.id)} 
+                                                    disabled={submitting[sub.id] || !poll.rating}
+                                                    className="h-10 px-6 rounded-xl shadow-lg shadow-indigo-100"
+                                                >
+                                                    {submitting[sub.id] ? 'Sealing...' : 'Submit Review'}
+                                                    <Send className="h-3.5 w-3.5 ml-2" />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {isSubmitted && poll.comments && (
+                                        <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl italic text-slate-500 text-xs">
+                                            "{poll.comments}"
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
 
-                {isOpen && !isLocked && (
-                  <div className="flex items-center gap-2 shrink-0">
-                    <input
-                      type="number"
-                      className="w-24 h-9 rounded border border-slate-300 px-2 text-sm text-center focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                      placeholder="Marks"
-                      value={markInputs[sub.id] || ''}
-                      onChange={e => setMarkInputs(prev => ({ ...prev, [sub.id]: e.target.value }))}
-                    />
-                    <Button size="sm" onClick={() => handleSubmitMark(sub)} disabled={uploading[sub.id]}>
-                      <Upload className="w-3.5 h-3.5 mr-1" />
-                      {uploading[sub.id] ? '...' : (hasMarks ? 'Update' : 'Submit')}
-                    </Button>
-                  </div>
-                )}
+                <div className="lg:col-span-1 space-y-6">
+                    <div className="panel p-6 bg-slate-900 text-white border-none relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:rotate-12 transition-transform">
+                            <Lock className="h-20 w-20" />
+                        </div>
+                        <h4 className="text-sm font-bold mb-4 flex items-center gap-2 text-indigo-400">
+                            <MessageSquare className="h-4 w-4" />
+                            Anonymity Clause
+                        </h4>
+                        <p className="text-xs text-slate-400 leading-relaxed font-medium">
+                            All feedback submitted through this portal is cryptographically anonymized. HODs and Teachers view aggregate ratings and raw comments without any linkage to your student ID or roll number.
+                        </p>
+                        <hr className="my-6 border-slate-800" />
+                        <div className="space-y-3">
+                             {['Subject Content', 'Faculty Pedagogy', 'Lab Resources', 'Assessment Fairness'].map((item, i) => (
+                                 <div key={i} className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                                     <span>{item}</span>
+                                     <ChevronRight className="h-3 w-3" />
+                                 </div>
+                             ))}
+                        </div>
+                    </div>
 
-                {!isOpen && !isLocked && (
-                  <span className="text-xs text-slate-400 shrink-0">Waiting for HOD to open poll</span>
-                )}
-              </div>
+                    <div className="panel p-6 border-slate-200 bg-white">
+                        <h4 className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">Poll Statistics</h4>
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-bold text-slate-600">Total Subjects</span>
+                                <span className="text-sm font-black text-slate-900">{subjects.length}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-bold text-slate-600">Polls Sealed</span>
+                                <span className="text-sm font-black text-indigo-600">{Object.keys(polls).length}</span>
+                            </div>
+                            <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                                <div 
+                                    className="h-full bg-indigo-600 transition-all duration-1000" 
+                                    style={{ width: `${(Object.keys(polls).length / (subjects.length || 1)) * 100}%` }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          );
-        })}
-      </div>
-    </div>
-  );
+        </div>
+    );
 };

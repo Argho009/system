@@ -22,12 +22,12 @@ export const AdminPreferences = () => {
     fetchBranches();
   }, []);
 
-  const fetchBranches = async () => {
+  async function fetchBranches() {
     setLoading(true);
     const { data } = await supabase.from('branches').select('*').order('name');
     if (data) setBranches(data);
     setLoading(false);
-  };
+  }
 
   const handleAddBranch = async (e) => {
     e.preventDefault();

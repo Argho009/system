@@ -14,7 +14,7 @@ export const HodLeaveManagement = () => {
 
   useEffect(() => { fetchLeaves(); }, []);
 
-  const fetchLeaves = async () => {
+  async function fetchLeaves() {
     setLoading(true);
     const { data, error } = await supabase
       .from('leave_requests')
@@ -23,7 +23,7 @@ export const HodLeaveManagement = () => {
     if (error) toast.error('Failed to load');
     else setLeaves(data || []);
     setLoading(false);
-  };
+  }
 
   const handleAction = async () => {
     const { id, action } = actionTarget;

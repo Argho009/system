@@ -22,7 +22,7 @@ export const AdminHolidays = () => {
         fetchHolidays();
     }, []);
 
-    const fetchHolidays = async () => {
+    async function fetchHolidays() {
         setLoading(true);
         const { data, error } = await supabase
             .from('holidays')
@@ -35,7 +35,7 @@ export const AdminHolidays = () => {
             setHolidays(data || []);
         }
         setLoading(false);
-    };
+    }
 
     const handleCreate = async (e) => {
         e.preventDefault();

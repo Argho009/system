@@ -260,6 +260,9 @@ export const MarksUpload = () => {
                    Continue to File Upload
                  </Button>
               </div>
+              <p className="text-[11px] text-slate-400 text-right mt-2 font-medium">
+                 Note: Uploaded file should ONLY have student roll no and marks.
+              </p>
             </div>
           )}
 
@@ -270,7 +273,7 @@ export const MarksUpload = () => {
                   <FileSpreadsheet className="h-8 w-8" />
                 </div>
                 <h4 className="font-semibold text-slate-800 tracking-tight">Select Marks Spreadsheet</h4>
-                <p className="text-xs text-slate-500 mt-1 mb-6 text-center">CSV or XLSX. Columns: roll_no, marks</p>
+                <p className="text-xs text-slate-500 mt-1 mb-6 text-center">CSV or XLSX. The uploaded file must only have student roll no and marks.</p>
                 <input 
                   type="file" 
                   id="marks-upload" 

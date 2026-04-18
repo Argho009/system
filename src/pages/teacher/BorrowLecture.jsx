@@ -31,7 +31,7 @@ export const BorrowLecture = () => {
       });
   }, [user]);
 
-  const fetchAll = async () => {
+  async function fetchAll() {
     setLoading(true);
     const { data } = await supabase.from('substitute_log')
       .select('*, original:users!substitute_log_original_teacher_id_fkey(name), substitute:users!substitute_log_substitute_teacher_id_fkey(name), timetable(day_of_week, lecture_no, branch, sem, subjects(code))')
@@ -39,7 +39,7 @@ export const BorrowLecture = () => {
       .order('created_at', { ascending: false });
     setLogs(data || []);
     setLoading(false);
-  };
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,13 +116,33 @@ export const BorrowLecture = () => {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="New Borrow Request">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col space-y-1">
+            <label className="text-sm font-medium text-slate-700">Date</label>
+            <div className="flex gap-2">
+              <Input type="date" className="flex-1" value={form.date} onChange={e => {
+                setForm({ ...form, date: e.target.value, timetable_id: '' });
+              }} required />
+              <Button type="button" variant="secondary" onClick={() => {
+                const today = new Date().toISOString().split('T')[0];
+                setForm({ ...form, date: today, timetable_id: '' });
+              }}>Today</Button>
+              <Button type="button" variant="secondary" onClick={() => {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                setForm({ ...form, date: tomorrow.toISOString().split('T')[0], timetable_id: '' });
+              }}>Tomorrow</Button>
+            </div>
+          </div>
+          <div className="flex flex-col space-y-1">
             <label className="text-sm font-medium text-slate-700">My Lecture Slot</label>
-            <select className="h-10 rounded border border-slate-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" value={form.timetable_id} onChange={e => setForm({ ...form, timetable_id: e.target.value })} required>
+            <select className="h-10 rounded border border-slate-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" value={form.timetable_id} onChange={e => setForm({ ...form, timetable_id: e.target.value })} required disabled={!form.date}>
               <option value="">Select slot...</option>
-              {timetableSlots.map(s => <option key={s.id} value={s.id}>{s.subjects?.code} — {s.day_of_week} Lec {s.lecture_no} ({s.branch}, Sem {s.sem})</option>)}
+              {timetableSlots.filter(s => {
+                if (!form.date) return true;
+                const dayStr = new Date(form.date).toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+                return s.day_of_week === dayStr;
+              }).map(s => <option key={s.id} value={s.id}>{s.subjects?.code} — {s.day_of_week} Lec {s.lecture_no} ({s.branch}, Sem {s.sem})</option>)}
             </select>
           </div>
-          <Input label="Date" type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} required />
           <div className="flex flex-col space-y-1">
             <label className="text-sm font-medium text-slate-700">Substitute Teacher</label>
             <select className="h-10 rounded border border-slate-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" value={form.substitute_teacher_id} onChange={e => setForm({ ...form, substitute_teacher_id: e.target.value })} required>

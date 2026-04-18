@@ -21,7 +21,7 @@ export const HodDashboard = () => {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
+  async function fetchData() {
     setLoading(true);
     const [studentsRes, leavesRes, condonRes, subjectsRes] = await Promise.all([
       supabase.from('students').select('*', { count: 'exact', head: true }),
@@ -36,7 +36,7 @@ export const HodDashboard = () => {
       subjects: subjectsRes.count || 0,
     });
     setLoading(false);
-  };
+  }
 
   return (
     <div className="space-y-6">

@@ -18,7 +18,7 @@ export const TeacherDashboard = () => {
     if (user) fetchData();
   }, [user]);
 
-  const fetchData = async () => {
+  async function fetchData() {
     setLoading(true);
     const today = DAYS[new Date().getDay()];
 
@@ -56,7 +56,7 @@ export const TeacherDashboard = () => {
       pendingLeaves: leaveRes.count || 0,
     });
     setLoading(false);
-  };
+  }
 
   const currentHour = new Date().getHours();
 

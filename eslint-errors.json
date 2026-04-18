@@ -1,0 +1,554 @@
+[
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scratch\\check_admin.js",
+        "line":  5,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scratch\\check_admin.js",
+        "line":  5,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scratch\\test_jwt.js",
+        "line":  5,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scratch\\test_jwt.js",
+        "line":  5,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scratch\\test_rls.js",
+        "line":  5,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scratch\\test_rls.js",
+        "line":  5,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\backup-now.js",
+        "line":  12,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\backup-now.js",
+        "line":  13,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\backup-now.js",
+        "line":  77,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\backup-now.js",
+        "line":  85,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\backup-now.js",
+        "line":  106,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\init-db.js",
+        "line":  11,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\init-db.js",
+        "line":  14,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\init-db.js",
+        "line":  15,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\init-db.js",
+        "line":  19,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\init-db.js",
+        "line":  42,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\scripts\\init-db.js",
+        "line":  70,
+        "rule":  "no-undef",
+        "message":  "\u0027process\u0027 is not defined."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\timetable\\PDFImportModal.jsx",
+        "line":  10,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027sems\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\timetable\\PDFImportModal.jsx",
+        "line":  18,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027isScanning\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\timetable\\PDFImportModal.jsx",
+        "line":  19,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027isSaving\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\timetable\\TimetableCropper.jsx",
+        "line":  1,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027useEffect\u0027 is defined but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\timetable\\TimetableGrid.jsx",
+        "line":  70,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027assignedSubjects\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\ui\\Button.jsx",
+        "line":  5,
+        "rule":  "react-refresh/only-export-components",
+        "message":  "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\ui\\NoticeBoard.jsx",
+        "line":  6,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027role\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\ui\\Pagination.jsx",
+        "line":  2,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027cn\u0027 is defined but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\ui\\SystemSettingsForm.jsx",
+        "line":  18,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchConfig` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  16 |\n  17 |   useEffect(() =\u003e {\n\u003e 18 |     fetchConfig();\n     |     ^^^^^^^^^^^ `fetchConfig` accessed before it is declared\n  19 |   }, []);\n  20 |\n  21 |   const fetchConfig = async () =\u003e {\n\n  19 |   }, []);\n  20 |\n\u003e 21 |   const fetchConfig = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 22 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 23 |     const { data } = await supabase.from(\u0027system_config\u0027).select(\u0027*\u0027);\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 35 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 36 |   };\n     | ^^^^^ `fetchConfig` is declared here\n  37 |\n  38 |   const handleSave = async () =\u003e {\n  39 |     setSaving(true);"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\components\\ui\\Toast.jsx",
+        "line":  33,
+        "rule":  "react-refresh/only-export-components",
+        "message":  "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\hooks\\useAttendance.js",
+        "line":  34,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\hooks\\useAttendance.js",
+        "line":  68,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\hooks\\useAuth.jsx",
+        "line":  64,
+        "rule":  "react-refresh/only-export-components",
+        "message":  "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\hooks\\useCondonation.js",
+        "line":  15,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\hooks\\useLeave.js",
+        "line":  15,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\hooks\\useMarks.js",
+        "line":  16,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\hooks\\useNotices.js",
+        "line":  17,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\AddUser.jsx",
+        "line":  32,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027newUserId\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\ArchiveSemester.jsx",
+        "line":  71,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\BackupFiles.jsx",
+        "line":  16,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027loading\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\BackupFiles.jsx",
+        "line":  21,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`loadArchives` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  19 |\n  20 |   useEffect(() =\u003e {\n\u003e 21 |     loadArchives();\n     |     ^^^^^^^^^^^^ `loadArchives` accessed before it is declared\n  22 |   }, []);\n  23 |\n  24 |   const loadArchives = async () =\u003e {\n\n  22 |   }, []);\n  23 |\n\u003e 24 |   const loadArchives = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 25 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 26 |     const { data } = await supabase\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 27 |       .from(\u0027archive_log\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 28 |       .select(\u0027*, users:archived_by(name)\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 29 |       .order(\u0027created_at\u0027, { ascending: false });\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 30 |     if (data) setArchives(data);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 31 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 32 |   };\n     | ^^^^^ `loadArchives` is declared here\n  33 |\n  34 |   const archiveCols = [\n  35 |     { header: \u0027Branch\u0027, accessor: \u0027branch\u0027 },"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Branches.jsx",
+        "line":  22,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchBranches` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  20 |\n  21 |   useEffect(() =\u003e {\n\u003e 22 |     fetchBranches();\n     |     ^^^^^^^^^^^^^ `fetchBranches` accessed before it is declared\n  23 |   }, []);\n  24 |\n  25 |   const fetchBranches = async () =\u003e {\n\n  23 |   }, []);\n  24 |\n\u003e 25 |   const fetchBranches = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 26 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 27 |     const { data: branchData, error: bError } = await supabase\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 48 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 49 |   };\n     | ^^^^^ `fetchBranches` is declared here\n  50 |\n  51 |   const handleAddBranch = async (e) =\u003e {\n  52 |     e.preventDefault();"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\BulkUpload.jsx",
+        "line":  90,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Dashboard.jsx",
+        "line":  20,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027role\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Dashboard.jsx",
+        "line":  145,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027Icon\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Health.jsx",
+        "line":  63,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Holidays.jsx",
+        "line":  22,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchHolidays` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  20 |\n  21 |     useEffect(() =\u003e {\n\u003e 22 |         fetchHolidays();\n     |         ^^^^^^^^^^^^^ `fetchHolidays` accessed before it is declared\n  23 |     }, []);\n  24 |\n  25 |     const fetchHolidays = async () =\u003e {\n\n  23 |     }, []);\n  24 |\n\u003e 25 |     const fetchHolidays = async () =\u003e {\n     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 26 |         setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 27 |         const { data, error } = await supabase\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 37 |         setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 38 |     };\n     | ^^^^^^^ `fetchHolidays` is declared here\n  39 |\n  40 |     const handleCreate = async (e) =\u003e {\n  41 |         e.preventDefault();"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Leaves.jsx",
+        "line":  49,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\MarksUpload.jsx",
+        "line":  105,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Preferences.jsx",
+        "line":  14,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027loading\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Preferences.jsx",
+        "line":  22,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchBranches` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  20 |\n  21 |   useEffect(() =\u003e {\n\u003e 22 |     fetchBranches();\n     |     ^^^^^^^^^^^^^ `fetchBranches` accessed before it is declared\n  23 |   }, []);\n  24 |\n  25 |   const fetchBranches = async () =\u003e {\n\n  23 |   }, []);\n  24 |\n\u003e 25 |   const fetchBranches = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 26 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 27 |     const { data } = await supabase.from(\u0027branches\u0027).select(\u0027*\u0027).order(\u0027name\u0027);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 28 |     if (data) setBranches(data);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 29 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 30 |   };\n     | ^^^^^ `fetchBranches` is declared here\n  31 |\n  32 |   const handleAddBranch = async (e) =\u003e {\n  33 |     e.preventDefault();"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Recovery.jsx",
+        "line":  35,
+        "rule":  "react-hooks/set-state-in-effect",
+        "message":  "Error: Calling setState synchronously within an effect can trigger cascading renders\n\nEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:\n* Update external systems with the latest state from React.\n* Subscribe for updates from some external system, calling setState in a callback function when external state changes.\n\nCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).\n\n  33 |\n  34 |   useEffect(() =\u003e {\n\u003e 35 |     fetchDeletedUsers();\n     |     ^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect\n  36 |   }, []);\n  37 |\n  38 |   const handleRestore = async (user) =\u003e {"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\SemTransition.jsx",
+        "line":  57,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Subjects.jsx",
+        "line":  18,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027user\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Users.jsx",
+        "line":  25,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027setSemFilter\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Users.jsx",
+        "line":  135,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\admin\\Users.jsx",
+        "line":  196,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\auth\\Login.jsx",
+        "line":  24,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027e\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\Analysis.jsx",
+        "line":  90,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\Attendance.jsx",
+        "line":  103,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\ChangeRequests.jsx",
+        "line":  15,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchRequests` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  13 |   const [actionTarget, setActionTarget] = useState(null);\n  14 |\n\u003e 15 |   useEffect(() =\u003e { fetchRequests(); }, []);\n     |                     ^^^^^^^^^^^^^ `fetchRequests` accessed before it is declared\n  16 |\n  17 |   const fetchRequests = async () =\u003e {\n  18 |     setLoading(true);\n\n  15 |   useEffect(() =\u003e { fetchRequests(); }, []);\n  16 |\n\u003e 17 |   const fetchRequests = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 18 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 19 |     const { data, error } = await supabase\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 30 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 31 |   };\n     | ^^^^^ `fetchRequests` is declared here\n  32 |\n  33 |   const handleAction = async () =\u003e {\n  34 |     const { id, action } = actionTarget;"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\Condonation.jsx",
+        "line":  15,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchRequests` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  13 |   const [actionTarget, setActionTarget] = useState(null);\n  14 |\n\u003e 15 |   useEffect(() =\u003e { fetchRequests(); }, []);\n     |                     ^^^^^^^^^^^^^ `fetchRequests` accessed before it is declared\n  16 |\n  17 |   const fetchRequests = async () =\u003e {\n  18 |     setLoading(true);\n\n  15 |   useEffect(() =\u003e { fetchRequests(); }, []);\n  16 |\n\u003e 17 |   const fetchRequests = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 18 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 19 |     const { data, error } = await supabase\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 20 |       .from(\u0027attendance_condonation\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 21 |       .select(\u0027*, students(roll_no, users(name)), subjects(code, name), requested_by_user:users!attendance_condonation_requested_by_fkey(name)\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 22 |       .order(\u0027created_at\u0027, { ascending: false });\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 23 |     if (error) toast.error(\u0027Failed to load\u0027);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 24 |     else setRequests(data || []);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 25 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 26 |   };\n     | ^^^^^ `fetchRequests` is declared here\n  27 |\n  28 |   const handleAction = async () =\u003e {\n  29 |     const { id, action } = actionTarget;"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\Dashboard.jsx",
+        "line":  7,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027toast\u0027 is defined but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\Dashboard.jsx",
+        "line":  15,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027user\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\Dashboard.jsx",
+        "line":  17,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027lowAttendance\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\Dashboard.jsx",
+        "line":  17,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027setLowAttendance\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\Dashboard.jsx",
+        "line":  21,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchData` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  19 |\n  20 |   useEffect(() =\u003e {\n\u003e 21 |     fetchData();\n     |     ^^^^^^^^^ `fetchData` accessed before it is declared\n  22 |   }, []);\n  23 |\n  24 |   const fetchData = async () =\u003e {\n\n  22 |   }, []);\n  23 |\n\u003e 24 |   const fetchData = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 25 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 26 |     const [studentsRes, leavesRes, condonRes, subjectsRes] = await Promise.all([\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 38 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 39 |   };\n     | ^^^^^ `fetchData` is declared here\n  40 |\n  41 |   return (\n  42 |     \u003cdiv className=\"space-y-6\"\u003e"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\EndSemPoll.jsx",
+        "line":  15,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027user\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\EndSemPoll.jsx",
+        "line":  63,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\Holidays.jsx",
+        "line":  27,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchHolidays` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  25 |\n  26 |     useEffect(() =\u003e {\n\u003e 27 |         if (branch) fetchHolidays();\n     |                     ^^^^^^^^^^^^^ `fetchHolidays` accessed before it is declared\n  28 |     }, [branch]);\n  29 |\n  30 |     const fetchHolidays = async () =\u003e {\n\n  28 |     }, [branch]);\n  29 |\n\u003e 30 |     const fetchHolidays = async () =\u003e {\n     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 31 |         setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 32 |         const { data } = await supabase.from(\u0027holidays\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 33 |             .select(\u0027*\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 34 |             .or(`branch.eq.${branch},branch.is.null`)\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 35 |             .order(\u0027date\u0027, { ascending: true });\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 36 |         if (data) setHolidays(data);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 37 |         setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 38 |     };\n     | ^^^^^^^ `fetchHolidays` is declared here\n  39 |\n  40 |     const handleAdd = async (e) =\u003e {\n  41 |         e.preventDefault();"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\LeaveManagement.jsx",
+        "line":  15,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchLeaves` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  13 |   const [actionTarget, setActionTarget] = useState(null); // { id, action }\n  14 |\n\u003e 15 |   useEffect(() =\u003e { fetchLeaves(); }, []);\n     |                     ^^^^^^^^^^^ `fetchLeaves` accessed before it is declared\n  16 |\n  17 |   const fetchLeaves = async () =\u003e {\n  18 |     setLoading(true);\n\n  15 |   useEffect(() =\u003e { fetchLeaves(); }, []);\n  16 |\n\u003e 17 |   const fetchLeaves = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 18 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 19 |     const { data, error } = await supabase\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 20 |       .from(\u0027leave_requests\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 21 |       .select(\u0027*, teacher:users!leave_requests_teacher_id_fkey(name, college_id), substitute:users!leave_requests_suggested_substitute_fkey(name)\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 22 |       .order(\u0027created_at\u0027, { ascending: false });\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 23 |     if (error) toast.error(\u0027Failed to load\u0027);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 24 |     else setLeaves(data || []);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 25 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 26 |   };\n     | ^^^^^ `fetchLeaves` is declared here\n  27 |\n  28 |   const handleAction = async () =\u003e {\n  29 |     const { id, action } = actionTarget;"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\hod\\SubjectAssignment.jsx",
+        "line":  17,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchAll` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  15 |\n  16 |   useEffect(() =\u003e {\n\u003e 17 |     fetchAll();\n     |     ^^^^^^^^ `fetchAll` accessed before it is declared\n  18 |   }, []);\n  19 |\n  20 |   const fetchAll = async () =\u003e {\n\n  18 |   }, []);\n  19 |\n\u003e 20 |   const fetchAll = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 21 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 22 |     const [aRes, sRes, tRes] = await Promise.all([\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 30 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 31 |   };\n     | ^^^^^ `fetchAll` is declared here\n  32 |\n  33 |   const handleAssign = async (e) =\u003e {\n  34 |     e.preventDefault();"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\shared\\Notices.jsx",
+        "line":  34,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchNotices` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  32 |\n  33 |   useEffect(() =\u003e {\n\u003e 34 |     fetchNotices();\n     |     ^^^^^^^^^^^^ `fetchNotices` accessed before it is declared\n  35 |     if (canPost) fetchSubjects();\n  36 |   }, []);\n  37 |\n\n  36 |   }, []);\n  37 |\n\u003e 38 |   const fetchNotices = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 39 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 40 |     const { data, error } = await supabase\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 48 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 49 |   };\n     | ^^^^^ `fetchNotices` is declared here\n  50 |\n  51 |   const fetchSubjects = async () =\u003e {\n  52 |     const { data } = await supabase.from(\u0027subjects\u0027).select(\u0027id, code, name\u0027);"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\shared\\Notices.jsx",
+        "line":  35,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchSubjects` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  33 |   useEffect(() =\u003e {\n  34 |     fetchNotices();\n\u003e 35 |     if (canPost) fetchSubjects();\n     |                  ^^^^^^^^^^^^^ `fetchSubjects` accessed before it is declared\n  36 |   }, []);\n  37 |\n  38 |   const fetchNotices = async () =\u003e {\n\n  49 |   };\n  50 |\n\u003e 51 |   const fetchSubjects = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 52 |     const { data } = await supabase.from(\u0027subjects\u0027).select(\u0027id, code, name\u0027);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 53 |     if (data) setSubjects(data);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 54 |   };\n     | ^^^^^ `fetchSubjects` is declared here\n  55 |\n  56 |   const handlePost = async (e) =\u003e {\n  57 |     e.preventDefault();"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\Attendance.jsx",
+        "line":  17,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027student\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\Attendance.jsx",
+        "line":  71,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\Condonation.jsx",
+        "line":  20,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027loading\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\Condonation.jsx",
+        "line":  46,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\Dashboard.jsx",
+        "line":  17,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchData` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  15 |\n  16 |     useEffect(() =\u003e {\n\u003e 17 |         if (user) fetchData();\n     |                   ^^^^^^^^^ `fetchData` accessed before it is declared\n  18 |     }, [user]);\n  19 |\n  20 |     const fetchData = async () =\u003e {\n\n  18 |     }, [user]);\n  19 |\n\u003e 20 |     const fetchData = async () =\u003e {\n     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 21 |         setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 22 |         const { data: stu } = await supabase.from(\u0027students\u0027).select(\u0027id, roll_no, branch, sem, users(name)\u0027).eq(\u0027user_id\u0027, user.id).single();\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 57 |         setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 58 |     };\n     | ^^^^^^^ `fetchData` is declared here\n  59 |\n  60 |     if (loading) return (\n  61 |         \u003cdiv className=\"flex items-center justify-center h-64\"\u003e"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\EndSem.jsx",
+        "line":  18,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027loading\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\EndSem.jsx",
+        "line":  46,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027err\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\Marks.jsx",
+        "line":  8,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027student\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\Marks.jsx",
+        "line":  13,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchData` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  11 |   const [loading, setLoading] = useState(true);\n  12 |\n\u003e 13 |   useEffect(() =\u003e { if (user) fetchData(); }, [user]);\n     |                               ^^^^^^^^^ `fetchData` accessed before it is declared\n  14 |\n  15 |   const fetchData = async () =\u003e {\n  16 |     setLoading(true);\n\n  13 |   useEffect(() =\u003e { if (user) fetchData(); }, [user]);\n  14 |\n\u003e 15 |   const fetchData = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 16 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 17 |     const { data: stu } = await supabase.from(\u0027students\u0027).select(\u0027id, branch, sem\u0027).eq(\u0027user_id\u0027, user.id).single();\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 27 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 28 |   };\n     | ^^^^^ `fetchData` is declared here\n  29 |\n  30 |   // Group CT marks by subject\n  31 |   const ctBySubject = ctMarks.reduce((acc, m) =\u003e {"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\student\\Profile.jsx",
+        "line":  24,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchProfile` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  22 |\n  23 |     useEffect(() =\u003e {\n\u003e 24 |         if (user) fetchProfile();\n     |                   ^^^^^^^^^^^^ `fetchProfile` accessed before it is declared\n  25 |     }, [user]);\n  26 |\n  27 |     const fetchProfile = async () =\u003e {\n\n  25 |     }, [user]);\n  26 |\n\u003e 27 |     const fetchProfile = async () =\u003e {\n     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 28 |         setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 29 |         const { data } = await supabase\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 30 |             .from(\u0027students\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 31 |             .select(\u0027*, users(*)\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 32 |             .eq(\u0027user_id\u0027, user.id)\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 33 |             .single();\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 34 |         if (data) setStudent(data);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 35 |         setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 36 |     };\n     | ^^^^^^^ `fetchProfile` is declared here\n  37 |\n  38 |     const handlePasswordChange = async (e) =\u003e {\n  39 |         e.preventDefault();"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\BorrowLecture.jsx",
+        "line":  15,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027assignments\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\BorrowLecture.jsx",
+        "line":  21,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchAll` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  19 |\n  20 |   useEffect(() =\u003e {\n\u003e 21 |     fetchAll();\n     |     ^^^^^^^^ `fetchAll` accessed before it is declared\n  22 |     supabase.from(\u0027users\u0027).select(\u0027id, name, college_id\u0027).eq(\u0027role\u0027, \u0027teacher\u0027).neq(\u0027id\u0027, user.id)\n  23 |       .then(({ data }) =\u003e setTeachers(data || []));\n  24 |     supabase.from(\u0027subject_assignments\u0027).select(\u0027subject_id, subjects(code, name, sem, branch)\u0027).eq(\u0027teacher_id\u0027, user.id)\n\n  32 |   }, [user]);\n  33 |\n\u003e 34 |   const fetchAll = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 35 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 36 |     const { data } = await supabase.from(\u0027substitute_log\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 37 |       .select(\u0027*, original:users!substitute_log_original_teacher_id_fkey(name), substitute:users!substitute_log_substitute_teacher_id_fkey(name), timetable(day_of_week, lecture_no, branch, sem, subjects(code))\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 38 |       .or(`original_teacher_id.eq.${user.id},substitute_teacher_id.eq.${user.id}`)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 39 |       .order(\u0027created_at\u0027, { ascending: false });\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 40 |     setLogs(data || []);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 41 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 42 |   };\n     | ^^^^^ `fetchAll` is declared here\n  43 |\n  44 |   const handleSubmit = async (e) =\u003e {\n  45 |     e.preventDefault();"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\Condonation.jsx",
+        "line":  94,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027uploadData\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\Dashboard.jsx",
+        "line":  15,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027teacherRecord\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\Dashboard.jsx",
+        "line":  15,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027setTeacherRecord\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\Dashboard.jsx",
+        "line":  18,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchData` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  16 |\n  17 |   useEffect(() =\u003e {\n\u003e 18 |     if (user) fetchData();\n     |               ^^^^^^^^^ `fetchData` accessed before it is declared\n  19 |   }, [user]);\n  20 |\n  21 |   const fetchData = async () =\u003e {\n\n  19 |   }, [user]);\n  20 |\n\u003e 21 |   const fetchData = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 22 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 23 |     const today = DAYS[new Date().getDay()];\n     …\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 58 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 59 |   };\n     | ^^^^^ `fetchData` is declared here\n  60 |\n  61 |   const currentHour = new Date().getHours();\n  62 |"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\Dashboard.jsx",
+        "line":  61,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027currentHour\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\LeaveRequest.jsx",
+        "line":  19,
+        "rule":  "react-hooks/immutability",
+        "message":  "Error: Cannot access variable before it is declared\n\n`fetchLeaves` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.\n\n  17 |\n  18 |   useEffect(() =\u003e {\n\u003e 19 |     fetchLeaves();\n     |     ^^^^^^^^^^^ `fetchLeaves` accessed before it is declared\n  20 |     supabase.from(\u0027users\u0027).select(\u0027id, name, college_id\u0027).eq(\u0027role\u0027, \u0027teacher\u0027).neq(\u0027id\u0027, user.id).then(({ data }) =\u003e setTeachers(data || []));\n  21 |   }, [user]);\n  22 |\n\n  21 |   }, [user]);\n  22 |\n\u003e 23 |   const fetchLeaves = async () =\u003e {\n     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\u003e 24 |     setLoading(true);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 25 |     const { data } = await supabase.from(\u0027leave_requests\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 26 |       .select(\u0027*, reviewer:users!leave_requests_reviewed_by_fkey(name), substitute:users!leave_requests_suggested_substitute_fkey(name)\u0027)\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 27 |       .eq(\u0027teacher_id\u0027, user.id).order(\u0027created_at\u0027, { ascending: false });\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 28 |     setLeaves(data || []);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 29 |     setLoading(false);\n     | ^^^^^^^^^^^^^^^^^^^^^\n\u003e 30 |   };\n     | ^^^^^ `fetchLeaves` is declared here\n  31 |\n  32 |   const handleSubmit = async (e) =\u003e {\n  33 |     e.preventDefault();"
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\MarkAttendance.jsx",
+        "line":  19,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027loading\u0027 is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\pages\\teacher\\MultiClass.jsx",
+        "line":  64,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027s\u0027 is defined but never used."
+    },
+    {
+        "file":  "C:\\Users\\argho\\OneDrive\\Desktop\\attandance\\src\\utils\\validators.js",
+        "line":  25,
+        "rule":  "no-unused-vars",
+        "message":  "\u0027blankMeans\u0027 is defined but never used."
+    }
+]

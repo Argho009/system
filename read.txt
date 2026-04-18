@@ -1,0 +1,93 @@
+========================================================================
+COLLEGE ATTENDANCE MANAGEMENT SYSTEM (CAMS) - PROJECT OVERVIEW
+========================================================================
+
+1. INTRODUCTION
+---------------
+The College Attendance Management System is a production-ready, full-stack 
+web application designed to automate and streamline attendance tracking, 
+marks management, and departmental communication within an educational 
+institution.
+
+The system is built with a focus on role-based access control, data 
+integrity, and automated maintenance.
+
+2. TECHNOLOGY STACK
+-------------------
+- Frontend: React.js (Vite)
+- Styling: Vanilla CSS & Tailwind CSS
+- Icons: Lucide React
+- Backend: Supabase (PostgreSQL, Auth, Storage)
+- Automation: GitHub Actions
+- Reports: XLSX (Excel Export/Import)
+
+3. ROLE-BASED MODULES
+---------------------
+
+A. ADMIN (System Controller)
+   - Dashboard: Real-time stats on students, teachers, and system logs.
+   - User Management: Add single users or Bulk Import thousands via Excel.
+   - System Health: Automated "Repair" tools to fix auth sync issues.
+   - Recovery Center: "Trash" system to restore accidentally deleted users.
+   - Global Config: Manage branches, schedules, and college preferences.
+   - Backups: Automated daily snapshots of the entire DB to Google Drive.
+
+B. HOD (Head of Department)
+   - Oversight: View attendance trends across the entire department.
+   - Analytics: Visual analysis of student marks and performance.
+   - Approvals: Manage teacher leave requests and student condonations.
+   - Scheduling: Assign subjects to teachers and manage the timetable.
+   - Notices: Broadcast official department announcements.
+
+C. TEACHER (The Educator)
+   - Attendance: Rapid marking for single classes or multi-class batches.
+   - Borrowing: Request/Borrow lectures from other teachers.
+   - Management: Submit leave requests and view historical lecture data.
+   - Timetable: Personal schedule view with real-time class highlights.
+
+D. STUDENT (The Learner)
+   - Portal: Real-time tracking of attendance percentages per subject.
+   - Progress: Dedicated view for internal marks and assessment results.
+   - Requests: Apply for condonation (attendance waivers) digitally.
+   - Notices: Native notice board for exams, holidays, and events.
+
+4. TECHNICAL ARCHITECTURE
+-------------------------
+
+A. Authentication Strategy
+The system uses Supabase Auth. Upon login, a custom React Hook (useAuth) 
+extracts the user's role from JWT 'app_metadata'. This ensures that 
+unauthorized users cannot even "see" routes belonging to other roles.
+
+B. Data Synchronization
+A unique "Auth-Sync" bridge exists between the public database and 
+private auth system. Whenever a user is created or updated, the system 
+ensures their login credentials and metadata are perfectly matched.
+
+C. Automated Workflows (GitHub Actions)
+- backup.yml: Daily backup of the Postgres DB to Google Drive.
+- keepalive.yml: Pings the database every 24h to prevent free-tier pausing.
+- supabase-deploy.yml: Auto-deploys any SQL schema changes pushed to main.
+
+5. SYSTEM MAINTENANCE
+---------------------
+The Admin panel includes a "System Health" page designed for non-technical 
+staff to fix common database issues (like broken login identities or 
+sync lags) with a single click, without ever needing to touch SQL code.
+
+6. PROJECT STRUCTURE
+--------------------
+📁 src/
+   ├── 📁 components/ (UI, Layout, Sidebar, Table, Modal)
+   ├── 📁 hooks/      (useAuth, useLocalStorage)
+   ├── 📁 pages/      (Role-specific subdirectories)
+   └── 📁 lib/        (Supabase client, excel parsers)
+📁 supabase/
+   └── 📁 migrations/ (History of all database schema changes)
+📁 .github/
+   └── 📁 workflows/  (Automation logic)
+
+========================================================================
+Generated on: 2026-04-18
+Status: Production-Ready
+========================================================================

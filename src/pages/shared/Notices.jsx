@@ -35,7 +35,7 @@ export const Notices = () => {
     if (canPost) fetchSubjects();
   }, []);
 
-  const fetchNotices = async () => {
+  async function fetchNotices() {
     setLoading(true);
     const { data, error } = await supabase
       .from('notices')
@@ -46,12 +46,12 @@ export const Notices = () => {
     if (error) toast.error('Failed to load notices');
     else setNotices(data || []);
     setLoading(false);
-  };
+  }
 
-  const fetchSubjects = async () => {
+  async function fetchSubjects() {
     const { data } = await supabase.from('subjects').select('id, code, name');
     if (data) setSubjects(data);
-  };
+  }
 
   const handlePost = async (e) => {
     e.preventDefault();

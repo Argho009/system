@@ -14,7 +14,7 @@ export const HodCondonation = () => {
 
   useEffect(() => { fetchRequests(); }, []);
 
-  const fetchRequests = async () => {
+  async function fetchRequests() {
     setLoading(true);
     const { data, error } = await supabase
       .from('attendance_condonation')
@@ -23,7 +23,7 @@ export const HodCondonation = () => {
     if (error) toast.error('Failed to load');
     else setRequests(data || []);
     setLoading(false);
-  };
+  }
 
   const handleAction = async () => {
     const { id, action } = actionTarget;

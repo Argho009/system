@@ -17,7 +17,7 @@ export const HodSubjectAssignment = () => {
     fetchAll();
   }, []);
 
-  const fetchAll = async () => {
+  async function fetchAll() {
     setLoading(true);
     const [aRes, sRes, tRes] = await Promise.all([
       supabase.from('subject_assignments').select('*, subjects(code, name, sem, branch), teacher:users!subject_assignments_teacher_id_fkey(name, college_id)'),
@@ -28,7 +28,7 @@ export const HodSubjectAssignment = () => {
     setSubjects(sRes.data || []);
     setTeachers(tRes.data || []);
     setLoading(false);
-  };
+  }
 
   const handleAssign = async (e) => {
     e.preventDefault();

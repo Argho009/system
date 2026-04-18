@@ -1,166 +1,230 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Button } from '../../components/ui/Button';
-import { Input } from '../../components/ui/Input';
 import { Badge } from '../../components/ui/Badge';
+import { Table } from '../../components/ui/Table';
+import { StatCard } from '../../components/ui/StatCard';
 import { toast } from '../../components/ui/Toast';
 import { rawPercent, finalPercent, colorForPercent } from '../../utils/attendanceCalc';
+import { 
+  Users, CheckCircle, AlertTriangle, FileText, 
+  Download, Search, Filter, Calendar 
+} from 'lucide-react';
+import { exportToExcel } from '../../utils/exportExcel';
 
 export const HodAttendance = () => {
-  const [branch, setBranch] = useState('');
-  const [sem, setSem] = useState('');
-  const [report, setReport] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [branches, setBranches] = useState([]);
-
-  useEffect(() => {
-    supabase.from('branches').select('name').then(({ data }) => {
-      if (data) setBranches(data.map((b) => b.name));
+    const [branches, setBranches] = useState([]);
+    const [subjects, setSubjects] = useState([]);
+    const [filters, setFilters] = useState({ 
+        branch: '', 
+        sem: '1', 
+        subject_id: 'All', 
+        date_from: '', 
+        date_to: '' 
     });
-  }, []);
+    const [report, setReport] = useState([]);
+    const [summary, setSummary] = useState({ totalLectures: 0, criticalStudents: 0 });
+    const [loading, setLoading] = useState(false);
 
-  const generateReport = async () => {
-    if (!branch || !sem) return toast.error('Select branch and semester');
-    setLoading(true);
+    useEffect(() => {
+        fetchInitialData();
+    }, []);
 
-    // Get all students in this branch/sem
-    const { data: students, error: stuErr } = await supabase
-      .from('students')
-      .select('id, roll_no, user_id, users(name)')
-      .eq('branch', branch)
-      .eq('sem', parseInt(sem));
+    const fetchInitialData = async () => {
+        const { data: bData } = await supabase.from('branches').select('*').order('name');
+        if (bData) {
+            setBranches(bData);
+            if (bData.length > 0) setFilters(f => ({ ...f, branch: bData[0].name }));
+        }
+    };
 
-    if (stuErr || !students?.length) {
-      toast.error('No students found');
-      setLoading(false);
-      return;
-    }
+    useEffect(() => {
+        if (filters.branch && filters.sem) {
+            supabase.from('subjects')
+                .select('id, code, name')
+                .eq('branch', filters.branch)
+                .eq('sem', parseInt(filters.sem))
+                .then(({ data }) => setSubjects(data || []));
+        }
+    }, [filters.branch, filters.sem]);
 
-    // Get all lectures for this branch/sem
-    const { data: lectures } = await supabase
-      .from('lectures')
-      .select('id, subject_id, subjects(code)')
-      .eq('sem', parseInt(sem))
-      .eq('is_skipped', false);
+    const generateReport = async () => {
+        if (!filters.branch || !filters.sem) return toast.error('Select scope first');
+        setLoading(true);
+        try {
+            // 1. Get Academic Year
+            const { data: config } = await supabase.from('system_config').select('value').eq('key', 'current_academic_year').single();
+            const academicYear = config?.value || '2024-25';
 
-    const lectureIds = (lectures || []).map((l) => l.id);
+            // 2. Get Students
+            const { data: students } = await supabase.from('students')
+                .select('id, roll_no, users(name)')
+                .eq('branch', filters.branch)
+                .eq('sem', parseInt(filters.sem))
+                .order('roll_no');
 
-    // Get attendance for these students
-    const { data: attendance } = await supabase
-      .from('attendance')
-      .select('student_id, lecture_id, status')
-      .in('lecture_id', lectureIds);
+            // 3. Get Lectures
+            let lecQuery = supabase.from('lectures').select('id, subject_id').eq('sem', parseInt(filters.sem)).eq('is_skipped', false);
+            if (filters.subject_id !== 'All') lecQuery = lecQuery.eq('subject_id', filters.subject_id);
+            if (filters.date_from) lecQuery = lecQuery.gte('date', filters.date_from);
+            if (filters.date_to) lecQuery = lecQuery.lte('date', filters.date_to);
+            const { data: lectures } = await lecQuery;
+            const lectureIds = (lectures || []).map(l => l.id);
 
-    // Get condonation
-    const { data: condonation } = await supabase
-      .from('attendance_condonation')
-      .select('student_id, subject_id, lectures_condoned')
-      .in('student_id', students.map((s) => s.id))
-      .eq('status', 'approved');
+            // 4. Get Attendance & Condonation
+            const [attRes, condRes] = await Promise.all([
+                supabase.from('attendance').select('student_id, lecture_id, status').in('lecture_id', lectureIds),
+                supabase.from('attendance_condonation').select('student_id, lectures_condoned').eq('status', 'approved').eq('academic_year', academicYear)
+            ]);
 
-    const reportRows = students.map((stu) => {
-      const stuAttendance = (attendance || []).filter((a) => a.student_id === stu.id);
-      const present = stuAttendance.filter((a) => a.status === 'present').length;
-      const total = lectureIds.length;
-      const condoned = (condonation || [])
-        .filter((c) => c.student_id === stu.id)
-        .reduce((acc, c) => acc + c.lectures_condoned, 0);
-      const raw = rawPercent(present, total);
-      const final = finalPercent(present, condoned, total);
-      return {
-        roll_no: stu.roll_no,
-        name: stu.users?.name || 'Unknown',
-        present,
-        total,
-        condoned,
-        raw,
-        final,
-      };
-    });
+            const rows = (students || []).map(stu => {
+                const stuAtt = (attRes.data || []).filter(a => a.student_id === stu.id);
+                const present = stuAtt.filter(a => a.status === 'present').length;
+                const total = lectureIds.length;
+                const condoned = (condRes.data || []).filter(c => c.student_id === stu.id).reduce((acc, c) => acc + (c.lectures_condoned || 0), 0);
+                
+                return {
+                    ...stu,
+                    name: stu.users?.name,
+                    total,
+                    present,
+                    absent: total - present,
+                    condoned,
+                    raw: rawPercent(present, total),
+                    final: finalPercent(present, condoned, total)
+                };
+            });
 
-    setReport(reportRows.sort((a, b) => a.final - b.final));
-    setLoading(false);
-  };
+            setReport(rows);
+            setSummary({
+                totalLectures: lectureIds.length,
+                criticalStudents: rows.filter(r => r.final < 75).length
+            });
+        } catch (err) {
+            toast.error('Report generation failed');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-slate-800">Attendance Overview</h2>
-        <p className="text-sm text-slate-500">View cumulative attendance for any branch and semester.</p>
-      </div>
+    const handleExport = () => {
+        if (report.length === 0) return;
+        const data = report.map(r => ({
+            Roll: r.roll_no,
+            Name: r.name,
+            Total: r.total,
+            Present: r.present,
+            Absent: r.absent,
+            Condoned: r.condoned,
+            'Raw %': r.raw,
+            'Final %': r.final,
+            Status: r.final >= 75 ? 'Eligible' : 'Critical'
+        }));
+        exportToExcel([{ name: 'Attendance', data }], `Attendance_${filters.branch}_Sem${filters.sem}`);
+    };
 
-      <div className="bg-white p-4 border border-slate-200 rounded-lg flex gap-4 items-end flex-wrap">
-        <div className="flex flex-col space-y-1">
-          <label className="text-sm font-medium text-slate-700">Branch</label>
-          <select
-            className="h-10 rounded border border-slate-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 min-w-[120px]"
-            value={branch}
-            onChange={(e) => setBranch(e.target.value)}
-          >
-            <option value="">Select...</option>
-            {branches.map((b) => <option key={b} value={b}>{b}</option>)}
-          </select>
+    return (
+        <div className="space-y-6 animate-in fade-in duration-500 pb-20">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2 text-indigo-600 mb-1">
+                    <FileText className="h-4 w-4" />
+                    <span className="text-[10px] font-extrabold uppercase tracking-[0.2em]">Oversight Dashboard</span>
+                  </div>
+                  <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Department Attendance</h2>
+                  <p className="text-sm text-slate-500 font-medium">Global participation registry and eligibility thresholds.</p>
+                </div>
+                <div className="flex gap-2">
+                    <Button variant="outline" onClick={handleExport} disabled={report.length === 0}>
+                        <Download className="h-4 w-4 mr-2" /> Export Excel
+                    </Button>
+                </div>
+            </div>
+
+            <div className="panel p-6 bg-white border-slate-200 shadow-xl shadow-slate-100/50">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Branch</label>
+                        <select className="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none cursor-pointer" value={filters.branch} onChange={e => setFilters({...filters, branch: e.target.value})}>
+                            {branches.map(b => <option key={b.id} value={b.name}>{b.name.toUpperCase()}</option>)}
+                        </select>
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Stage</label>
+                        <select className="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none cursor-pointer" value={filters.sem} onChange={e => setFilters({...filters, sem: e.target.value})}>
+                            {[1,2,3,4,5,6,7,8].map(s => <option key={s} value={s.toString()}>Sem {s}</option>)}
+                        </select>
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Context (Subject)</label>
+                        <select className="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none cursor-pointer" value={filters.subject_id} onChange={e => setFilters({...filters, subject_id: e.target.value})}>
+                            <option value="All">All Subjects (Global)</option>
+                            {subjects.map(s => <option key={s.id} value={s.id}>{s.code} - {s.name}</option>)}
+                        </select>
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Date From</label>
+                        <input type="date" className="w-full h-10 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold outline-none" value={filters.date_from} onChange={e => setFilters({...filters, date_from: e.target.value})} />
+                    </div>
+                    <div className="flex items-end">
+                        <Button className="w-full h-10 rounded-xl shadow-lg shadow-indigo-100" onClick={generateReport} disabled={loading}>
+                           {loading ? 'Processing...' : 'Sync Registry'}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <StatCard title="Prominent Lectures Held" value={summary.totalLectures} icon={Calendar} color="indigo" />
+                <StatCard title="Tracked Population" value={report.length} icon={Users} color="slate" />
+                <StatCard 
+                    title="Critical Eligibility" 
+                    value={summary.criticalStudents} 
+                    subtitle="Students below 75%" 
+                    icon={AlertTriangle} 
+                    color={summary.criticalStudents > 0 ? 'red' : 'green'} 
+                />
+            </div>
+
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden">
+                <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                    <h3 className="font-bold text-slate-900 flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4 text-indigo-600" />
+                        Cumulative Performance Index
+                    </h3>
+                </div>
+                <Table 
+                    columns={[
+                        { header: 'Identity', accessor: 'roll_no', render: r => (
+                            <div className="flex flex-col">
+                                <span className="font-bold text-slate-800 text-sm italic">{r.roll_no}</span>
+                                <span className="text-xs text-slate-500 font-medium">{r.name}</span>
+                            </div>
+                        )},
+                        { header: 'Registry (P/T)', accessor: 'id', render: r => (
+                             <div className="flex items-center gap-1.5 font-bold text-xs">
+                                <span className="text-slate-800">{r.present}</span>
+                                <span className="text-slate-300">/</span>
+                                <span className="text-slate-400">{r.total}</span>
+                             </div>
+                        )},
+                        { header: 'Absent', accessor: 'absent', render: r => <span className="text-xs font-bold text-red-400">{r.absent} units</span> },
+                        { header: 'Condoned', accessor: 'condoned', render: r => <Badge variant={r.condoned > 0 ? 'indigo' : 'slate'} className="text-[10px]">{r.condoned} Units</Badge> },
+                        { header: 'Raw Index', accessor: 'raw', render: r => <span className="text-xs font-bold text-slate-400">{r.raw}%</span> },
+                        { header: 'Final Index', accessor: 'final', render: r => <span className={`text-sm font-black ${colorForPercent(r.final)}`}>{r.final}%</span> },
+                        { 
+                            header: 'Status', 
+                            render: r => (
+                                <Badge variant={r.final >= 75 ? 'success' : r.final >= 65 ? 'warning' : 'danger'} className="px-3">
+                                    {r.final >= 75 ? 'ELIGIBLE' : r.final >= 65 ? 'WARNING' : 'OUTSIDE'}
+                                </Badge>
+                            )
+                        }
+                    ]}
+                    data={report}
+                    emptyMessage="No registry data available for selected scope."
+                />
+            </div>
         </div>
-        <div className="flex flex-col space-y-1">
-          <label className="text-sm font-medium text-slate-700">Semester</label>
-          <select
-            className="h-10 rounded border border-slate-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
-            value={sem}
-            onChange={(e) => setSem(e.target.value)}
-          >
-            <option value="">Select...</option>
-            {[1,2,3,4,5,6,7,8].map((s) => <option key={s} value={s}>Sem {s}</option>)}
-          </select>
-        </div>
-        <Button onClick={generateReport} disabled={loading}>
-          {loading ? 'Generating...' : 'Generate Report'}
-        </Button>
-      </div>
-
-      {report.length > 0 && (
-        <div className="overflow-x-auto rounded-lg border border-slate-200">
-          <table className="w-full text-sm text-left text-slate-700">
-            <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
-              <tr>
-                <th className="px-4 py-3">Roll No</th>
-                <th className="px-4 py-3">Name</th>
-                <th className="px-4 py-3 text-center">Present</th>
-                <th className="px-4 py-3 text-center">Total</th>
-                <th className="px-4 py-3 text-center">Condoned</th>
-                <th className="px-4 py-3 text-center">Raw %</th>
-                <th className="px-4 py-3 text-center">Final %</th>
-                <th className="px-4 py-3 text-center">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {report.map((row, i) => (
-                <tr key={i} className="border-b last:border-0 hover:bg-slate-50">
-                  <td className="px-4 py-3 font-mono text-xs">{row.roll_no}</td>
-                  <td className="px-4 py-3">{row.name}</td>
-                  <td className="px-4 py-3 text-center">{row.present}</td>
-                  <td className="px-4 py-3 text-center">{row.total}</td>
-                  <td className="px-4 py-3 text-center">{row.condoned}</td>
-                  <td className="px-4 py-3 text-center">
-                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${colorForPercent(row.raw)}`}>
-                      {row.raw}%
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${colorForPercent(row.final)}`}>
-                      {row.final}%
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <Badge variant={row.final >= 75 ? 'success' : row.final >= 65 ? 'warning' : 'danger'}>
-                      {row.final >= 75 ? 'OK' : row.final >= 65 ? 'Condone' : 'Detained'}
-                    </Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-  );
+    );
 };

@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase';
 import { Button } from './Button';
 import { Input } from './Input';
 import { toast } from './Toast';
+import { RefreshCw, Save } from 'lucide-react';
 
 export const SystemSettingsForm = () => {
   const [config, setConfig] = useState({
@@ -17,7 +18,7 @@ export const SystemSettingsForm = () => {
     fetchConfig();
   }, []);
 
-  const fetchConfig = async () => {
+  async function fetchConfig() {
     setLoading(true);
     const { data } = await supabase.from('system_config').select('*');
     if (data) {
@@ -32,7 +33,7 @@ export const SystemSettingsForm = () => {
       });
     }
     setLoading(false);
-  };
+  }
 
   const handleSave = async () => {
     setSaving(true);
@@ -47,54 +48,78 @@ export const SystemSettingsForm = () => {
     if (error) {
       toast.error('Failed to save settings');
     } else {
-      toast.success('System settings updated');
+      toast.success('System variables updated globally');
     }
     setSaving(false);
   };
 
-  if (loading) return <div className="p-4 text-center text-slate-500">Loading system settings...</div>;
+  if (loading) return (
+    <div className="p-8 flex items-center justify-center">
+        <RefreshCw className="h-6 w-6 text-indigo-600 animate-spin" />
+    </div>
+  );
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-      <div className="p-6 border-b border-slate-100 bg-slate-50/50">
-        <h3 className="font-semibold text-slate-800">Global System Settings</h3>
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="space-y-3">
+            <div className="flex flex-col">
+                <label className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1.5 px-1">Academic Year</label>
+                <Input 
+                    value={config.academic_year} 
+                    onChange={(e) => setConfig({...config, academic_year: e.target.value.toUpperCase()})}
+                    placeholder="2024-25"
+                    className="h-11 font-black text-slate-800"
+                />
+                <p className="text-[10px] text-slate-400 font-medium mt-2 px-1">Format: YYYY-YY (e.g., 2026-27)</p>
+            </div>
+        </div>
+
+        <div className="col-span-1 space-y-3">
+            <div className="flex flex-col">
+                <div className="flex items-center justify-between mb-2 px-1">
+                    <label className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Lectures per Day</label>
+                    <span className="text-xs font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-lg">{config.lectures_per_day} Units</span>
+                </div>
+                <input 
+                    type="range" 
+                    min="4" 
+                    max="8" 
+                    step="1"
+                    className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                    value={config.lectures_per_day} 
+                    onChange={(e) => setConfig({...config, lectures_per_day: parseInt(e.target.value)})}
+                />
+                <div className="flex justify-between text-[10px] font-bold text-slate-300 mt-2 px-1">
+                    <span>4 (MIN)</span>
+                    <span>8 (MAX)</span>
+                </div>
+            </div>
+        </div>
+
+        <div className="col-span-1 space-y-3">
+            <div className="flex flex-col">
+                <label className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1.5 px-1">Working Week</label>
+                <div className="grid grid-cols-6 gap-2">
+                    {[1,2,3,4,5,6].map(d => (
+                        <button
+                            key={d}
+                            onClick={() => setConfig({...config, working_days_per_week: d})}
+                            className={`h-11 rounded-xl text-xs font-bold transition-all ${config.working_days_per_week === d ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
+                        >
+                            {d}d
+                        </button>
+                    ))}
+                </div>
+            </div>
+        </div>
       </div>
-      <div className="p-6 space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-slate-700">Academic Year</label>
-            <Input 
-              value={config.academic_year} 
-              onChange={(e) => setConfig({...config, academic_year: e.target.value})}
-              placeholder="e.g. 2024-25"
-            />
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-slate-700">Lectures Per Day</label>
-            <Input 
-              type="number" 
-              min={4} 
-              max={8}
-              value={config.lectures_per_day} 
-              onChange={(e) => setConfig({...config, lectures_per_day: parseInt(e.target.value)})}
-            />
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-slate-700">Working Days Per Week</label>
-            <Input 
-              type="number" 
-              min={1} 
-              max={6}
-              value={config.working_days_per_week} 
-              onChange={(e) => setConfig({...config, working_days_per_week: parseInt(e.target.value)})}
-            />
-          </div>
-        </div>
-        <div className="pt-4 flex justify-end">
-          <Button onClick={handleSave} disabled={saving}>
-            {saving ? 'Saving...' : 'Update Global Settings'}
-          </Button>
-        </div>
+      
+      <div className="pt-6 border-t border-slate-50 flex justify-end">
+        <Button onClick={handleSave} disabled={saving} className="px-10 h-12 rounded-2xl shadow-xl shadow-indigo-100/50">
+          {saving ? <RefreshCw className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+          Commit System State
+        </Button>
       </div>
     </div>
   );
