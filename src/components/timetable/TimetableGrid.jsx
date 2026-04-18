@@ -207,18 +207,33 @@ export const TimetableGrid = ({ branch, sem, editable = false }) => {
 
     if (!confirm(`Are you sure you want to set the room to "${defaultRoom}" for all assigned lectures in this branch/sem?`)) return;
 
-    setLoading(true);
-    const { error } = await supabase
-      .from('timetable')
-      .update({ room: defaultRoom })
-      .eq('branch', branch)
-      .eq('sem', sem);
+    const postNotice = confirm('Would you like to post an automated announcement to the Notice Board about this change?');
 
-    if (error) {
-      toast.error('Failed to update rooms');
-    } else {
-      toast.success('All rooms updated for this schedule');
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from('timetable')
+        .update({ room: defaultRoom })
+        .eq('branch', branch)
+        .eq('sem', sem);
+
+      if (error) throw error;
+
+      if (postNotice) {
+        await supabase.from('notices').insert({
+          title: `Room Change: ${branch} Sem ${sem}`,
+          body: `Please note that all scheduled lectures for this branch/semester have been moved to ${defaultRoom} for the current week.`,
+          type: 'general',
+          branch: branch,
+          sem: sem,
+          created_by: user.id
+        });
+      }
+
+      toast.success(postNotice ? 'Rooms updated and notice published!' : 'All rooms updated for this schedule');
       fetchData();
+    } catch (err) {
+      toast.error('Failed to update rooms: ' + err.message);
     }
     setLoading(false);
   };

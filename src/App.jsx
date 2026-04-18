@@ -58,7 +58,38 @@ import { SemTransition } from './pages/admin/SemTransition';
 import { AdminConfig } from './pages/admin/Config';
 import { AdminPreferences } from './pages/admin/Preferences';
 import { AdminNotices } from './pages/admin/Notices';
+import { AdminHolidays } from './pages/admin/Holidays';
 import { EmergencyRecovery } from './pages/admin/Recovery';
+
+// Shared
+import { Notices } from './pages/shared/Notices';
+
+// HOD
+import { HodDashboard } from './pages/hod/Dashboard';
+import { HodAttendance } from './pages/hod/Attendance';
+import { HodAnalysis } from './pages/hod/Analysis';
+import { HodHolidays } from './pages/hod/Holidays';
+import { HodEndSemPoll } from './pages/hod/EndSemPoll';
+import { HodSubjectAssignment } from './pages/hod/SubjectAssignment';
+import { HodLeaveManagement } from './pages/hod/LeaveManagement';
+import { HodCondonation } from './pages/hod/Condonation';
+import { HodChangeRequests } from './pages/hod/ChangeRequests';
+
+// Teacher
+import { TeacherDashboard } from './pages/teacher/Dashboard';
+import { MarkAttendance } from './pages/teacher/MarkAttendance';
+import { MultiClass } from './pages/teacher/MultiClass';
+import { BorrowLecture } from './pages/teacher/BorrowLecture';
+import { TeacherLeaveRequest } from './pages/teacher/LeaveRequest';
+import { TeacherCondonation } from './pages/teacher/Condonation';
+import { TeacherHistory } from './pages/teacher/History';
+
+// Student
+import { StudentDashboard } from './pages/student/Dashboard';
+import { StudentAttendance } from './pages/student/Attendance';
+import { StudentMarks } from './pages/student/Marks';
+import { StudentCondonation } from './pages/student/Condonation';
+import { StudentEndSem } from './pages/student/EndSem';
 
 function AppRoutes() {
   return (
@@ -79,46 +110,46 @@ function AppRoutes() {
         <Route path="config" element={<AdminConfig />} />
         <Route path="preferences" element={<AdminPreferences />} />
         <Route path="notices" element={<AdminNotices />} />
-        <Route path="holidays" element={<Placeholder title="Holidays Management" />} />
+        <Route path="holidays" element={<AdminHolidays />} />
         <Route path="recovery" element={<EmergencyRecovery />} />
       </Route>
 
       {/* HOD ROUTES */}
       <Route path="/hod" element={<ProtectedRoute allowedRoles={['hod']}><Layout showPinboard={true} /></ProtectedRoute>}>
-        <Route index element={<Placeholder title="HOD Dashboard" />} />
-        <Route path="attendance" element={<Placeholder title="Attendance Overview" />} />
-        <Route path="analysis" element={<Placeholder title="Marks Analysis" />} />
-        <Route path="holidays" element={<Placeholder title="Holiday Management" />} />
-        <Route path="end-sem-poll" element={<Placeholder title="End Sem Poll" />} />
-        <Route path="timetable" element={<Placeholder title="Timetable" />} />
-        <Route path="subjects" element={<Placeholder title="Subjects and Assignment" />} />
-        <Route path="leave-management" element={<Placeholder title="Leave Management" />} />
-        <Route path="condonation" element={<Placeholder title="Condonation Approval" />} />
-        <Route path="change-requests" element={<Placeholder title="Change Requests" />} />
-        <Route path="notices" element={<Placeholder title="Notices" />} />
+        <Route index element={<HodDashboard />} />
+        <Route path="attendance" element={<HodAttendance />} />
+        <Route path="analysis" element={<HodAnalysis />} />
+        <Route path="holidays" element={<HodHolidays />} />
+        <Route path="end-sem-poll" element={<HodEndSemPoll />} />
+        <Route path="timetable" element={<AdminTimetable />} />
+        <Route path="subjects" element={<HodSubjectAssignment />} />
+        <Route path="leave-management" element={<HodLeaveManagement />} />
+        <Route path="condonation" element={<HodCondonation />} />
+        <Route path="change-requests" element={<HodChangeRequests />} />
+        <Route path="notices" element={<Notices />} />
       </Route>
 
       {/* TEACHER ROUTES */}
       <Route path="/teacher" element={<ProtectedRoute allowedRoles={['teacher']}><Layout showPinboard={true} /></ProtectedRoute>}>
-        <Route index element={<Placeholder title="Teacher Dashboard" />} />
-        <Route path="mark-attendance" element={<Placeholder title="Mark Attendance" />} />
-        <Route path="multi-class" element={<Placeholder title="Multi-Class Attendance" />} />
-        <Route path="borrow" element={<Placeholder title="Borrow Lecture" />} />
-        <Route path="leave-request" element={<Placeholder title="Leave Request" />} />
-        <Route path="condonation" element={<Placeholder title="Condonation Request" />} />
-        <Route path="history" element={<Placeholder title="Attendance History" />} />
-        <Route path="timetable" element={<Placeholder title="Timetable" />} />
-        <Route path="notices" element={<Placeholder title="Notices" />} />
+        <Route index element={<TeacherDashboard />} />
+        <Route path="mark-attendance" element={<MarkAttendance />} />
+        <Route path="multi-class" element={<MultiClass />} />
+        <Route path="borrow" element={<BorrowLecture />} />
+        <Route path="leave-request" element={<TeacherLeaveRequest />} />
+        <Route path="condonation" element={<TeacherCondonation />} />
+        <Route path="history" element={<TeacherHistory />} />
+        <Route path="timetable" element={<AdminTimetable />} />
+        <Route path="notices" element={<Notices />} />
       </Route>
 
       {/* STUDENT ROUTES */}
       <Route path="/student" element={<ProtectedRoute allowedRoles={['student']}><Layout showPinboard={true} /></ProtectedRoute>}>
-        <Route index element={<Placeholder title="Student Dashboard" />} />
-        <Route path="attendance" element={<Placeholder title="My Attendance" />} />
-        <Route path="marks" element={<Placeholder title="My Marks" />} />
-        <Route path="condonation" element={<Placeholder title="Condonation Request" />} />
-        <Route path="end-sem" element={<Placeholder title="End Sem Submissions" />} />
-        <Route path="notices" element={<Placeholder title="Notice Board" />} />
+        <Route index element={<StudentDashboard />} />
+        <Route path="attendance" element={<StudentAttendance />} />
+        <Route path="marks" element={<StudentMarks />} />
+        <Route path="condonation" element={<StudentCondonation />} />
+        <Route path="end-sem" element={<StudentEndSem />} />
+        <Route path="notices" element={<Notices />} />
         <Route path="profile" element={<Placeholder title="Profile" />} />
       </Route>
 
