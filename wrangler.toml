@@ -1,0 +1,28 @@
+name = "attendance-app"
+main = "workers/src/index.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = [ "nodejs_compat" ]
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
+
+
+
+[vars]
+# Set JWT_SECRET via `wrangler secret put JWT_SECRET` for production
+# Local dev: use .dev.vars (see README in repo root)
+
+[[d1_databases]]
+binding = "DB"
+database_name = "attendance-db"
+# Replace with your D1 UUID from: wrangler d1 create attendance-db
+database_id = "117a9115-fa52-4758-a7de-975928e6b423"
+
+migrations_dir = "d1/migrations"
+
+# R2 for file uploads (condonation PDFs, timetable images, semester archives). Create: wrangler r2 bucket create attendance-files
+# [[r2_buckets]]
+# binding = "FILES"
+# bucket_name = "attendance-files"
+

@@ -1,0 +1,37 @@
+PROJECT SCHEMA AUDIT & REPAIR LOG
+---------------------------------
+Generated on: 2026-04-19
+
+Audit conducted on d1/migrations/0001_schema.sql vs workers/src/api-routes.ts
+
+IDENTIFIED DISCREPANCIES:
+1. Table: users
+   - Missing column: initial_password (TEXT)
+   - Usage: Required for admin bulk-upsert operations and initial user setup tracking.
+
+2. Table: lectures
+   - Missing column: sem (INTEGER)
+   - Usage: Used for filtering attendance by semester in dashboards.
+   - Missing columns: is_proxy, proxy_marked_by, proxy_status
+   - Usage: Core to the "Borrowed Lecture" / Substitute teacher workflow (Teacher Role).
+
+3. Table: attendance_condonation
+   - Missing column: sem (INTEGER)
+   - Usage: Facilitates filtering and approval monitoring at HOD level.
+
+4. Table: timetable
+   - Unique Constraint Conflict: The Worker API uses ON CONFLICT(branch, sem, day_of_week, lecture_no).
+   - Problem: The primary unique constraint in the schema included 'effective_from', which caused upsert failures when 'effective_from' was not provided in the request body.
+
+FIXES APPLIED:
+- Created d1/migrations/0003_schema_fixes.sql
+- Added all missing columns via ALTER TABLE.
+- Created idx_timetable_upsert to support smooth timetable overrides.
+- Added performance indexes for the new columns to ensure system responsiveness during reporting.
+
+- Created d1/migrations/0004_seed_main_admin.sql
+- Seeded primary admin account: College ID: ADMIN01 / Password: @1234
+
+All changes have been synchronized with the source code requirements.
+---------------------------------
+STATUS: FIXED
